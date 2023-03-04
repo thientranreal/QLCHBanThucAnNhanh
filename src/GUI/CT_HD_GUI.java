@@ -6,7 +6,13 @@ import DTO.CT_HD_DTO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -99,6 +105,23 @@ public class CT_HD_GUI {
 
         frame.pack();
         frame.setLocationRelativeTo(null);
+        pro_id_ls.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int index = pro_id_ls.getSelectedIndex();
+                product_id_txt.setText(pro_id_ls.getSelectedValue().toString());
+                pro_name_ls.setSelectedIndex(index);
+            }
+        });
+
+        pro_name_ls.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int index = pro_name_ls.getSelectedIndex();
+                product_name_txt.setText(pro_name_ls.getSelectedValue().toString());
+                pro_id_ls.setSelectedIndex(index);
+            }
+        });
     }
 
     private void loadCT_HD(String orderID, DefaultTableModel model) {
