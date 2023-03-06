@@ -1,6 +1,6 @@
 package DTO;
 
-public class CT_HD_DTO {
+public class CT_HD_ShowTable_DTO {
     private String orderID;
     private String customerID;
     private String customerName;
@@ -9,10 +9,10 @@ public class CT_HD_DTO {
     private int quantity;
     private float price;
 
-    public CT_HD_DTO() {
+    public CT_HD_ShowTable_DTO() {
     }
 
-    public CT_HD_DTO(String orderID, String customerID, String customerName, String productID, String productName, int quantity, float price) {
+    public CT_HD_ShowTable_DTO(String orderID, String customerID, String customerName, String productID, String productName, int quantity, float price) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.customerName = customerName;
