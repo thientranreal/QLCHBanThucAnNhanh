@@ -73,6 +73,7 @@ public class CT_HD_GUI {
         frame.setVisible(true);
         frame.add(CT_HD_panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        CT_HD_table.setRowHeight(20);
 
         // margin for panel root
         CT_HD_panel.setBorder(new EmptyBorder(5, 10, 5, 10));
