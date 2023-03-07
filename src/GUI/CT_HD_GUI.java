@@ -66,14 +66,26 @@ public class CT_HD_GUI {
     private static ArrayList<CT_HD_ShowTable_DTO> list;
     private static ArrayList<CT_HD_Product_DTO> products;
 
-    public CT_HD_GUI(String orderID) {
+    public CT_HD_GUI(String orderID, JFrame fatherFrame) {
+        fatherFrame.setVisible(false);
         JFrame frame = new JFrame("Quản lý chi tiết đơn hàng");
+
+//      Add window closing event
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                fatherFrame.setVisible(true);
+            }
+        });
+
         CT_HD_BUS busCTHD = new CT_HD_BUS();
 
         frame.setVisible(true);
         frame.add(CT_HD_panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         CT_HD_table.setRowHeight(20);
+        CT_HD_table.setDefaultEditor(Object.class, null);
 
         // margin for panel root
         CT_HD_panel.setBorder(new EmptyBorder(5, 10, 5, 10));

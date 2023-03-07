@@ -5,11 +5,11 @@ import DTO.HD_DTO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
-import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class HoaDon_GUI {
@@ -38,6 +38,22 @@ public class HoaDon_GUI {
     private JList search_result;
     private JPanel col_1;
     private JPanel col_2;
+    private JButton update_btn;
+    private JButton rm_btn;
+    private JButton add_btn;
+    private JPanel btn_panel;
+    private JLabel date_lb;
+    private JTextField day_txt;
+    private JTextField month_txt;
+    private JTextField year_txt;
+    private JTextField hour_txt;
+    private JTextField minute_txt;
+    private JTextField second_txt;
+    private JLabel time_lb;
+    private JPanel date_panel;
+    private JPanel time_panel;
+    private JButton generate_dtime_btn;
+    private JPanel generate_btn_panel;
     private static ArrayList<HD_DTO> hoaDonList = new ArrayList<>();
     private static HD_BUS hdBus = new HD_BUS();
     private ArrayList<HD_DTO> hoaDonListTemp = new ArrayList<>();
@@ -50,6 +66,7 @@ public class HoaDon_GUI {
         HoaDon_panel.setBorder(new EmptyBorder(5, 10, 5, 10));
         show_info.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
         HoaDon_table.setRowHeight(20);
+        HoaDon_table.setDefaultEditor(Object.class, null);
         search_panel.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
 
 //        Begin
@@ -60,6 +77,8 @@ public class HoaDon_GUI {
         String[] columns = {"Mã hóa đơn", "Mã nhân viên", "Tên nhân viên",
                 "Mã khách hàng", "Tên khách hàng", "Ngày giờ đặt"};
         loadTableModel(HoaDon_table, columns, hoaDonList);
+
+
 //        Add data for combo box search
         DefaultComboBoxModel dModel = new DefaultComboBoxModel();
         for (String col : columns) {
@@ -103,7 +122,7 @@ public class HoaDon_GUI {
             }
         });
 
-//        Input lister for search input
+//        Input listener for search input
         search_input.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -111,6 +130,10 @@ public class HoaDon_GUI {
                 int index = search_type.getSelectedIndex();
                 if (index == -1) {
                     return;
+                }
+//                if input is empty then load all data to Hoa Don table
+                if (search_input.getText().equals("")) {
+                    loadTableModel(HoaDon_table, columns, hoaDonList);
                 }
 
 //                Add matching string to search result list
@@ -138,6 +161,25 @@ public class HoaDon_GUI {
 
                 hoaDonListTemp = getAllOrdersByCondition(thisValue, index);
                 loadTableModel(HoaDon_table, columns, hoaDonListTemp);
+            }
+        });
+//        Double click event for Hoa Don table to show CT_HD frame
+        HoaDon_table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount() == 2) {
+                    int row = HoaDon_table.getSelectedRow();
+                    String orderId = HoaDon_table.getValueAt(row, 0).toString();
+                    new CT_HD_GUI(orderId, frame);
+                }
+            }
+        });
+//        Add button hoa don event
+        add_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
@@ -186,5 +228,23 @@ public class HoaDon_GUI {
         }
 
         return result;
+    }
+    private String turnDateToSqlDate(String day, String month, String year) {
+        return String.format("%s-%s-%s", year, month, day);
+    }
+    private String turnTimeToSqlTime(String hour, String minute, String second) {
+        return String.format("%s:%s:%s", hour, minute, second);
+    }
+//    Check date valid
+    private boolean isDateValid(String date)
+    {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 }
