@@ -67,4 +67,23 @@ public class HD_DTO {
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
+
+    public String getByIndex(int index) {
+        switch (index) {
+            case 0:
+                return orderID;
+            case 1:
+                return employeeID;
+            case 2:
+                return employeeName;
+            case 3:
+                return customerID;
+            case 4:
+                return customerName;
+            case 5:
+                return orderDate;
+            default:
+                return "N/A";
+        }
+    }
 }
