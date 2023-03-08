@@ -2,7 +2,6 @@ package GUI;
 
 import BUS.CT_HD_BUS;
 import DTO.CT_HD_Product_DTO;
-import DTO.CT_HD_ShowTTChung_DTO;
 import DTO.CT_HD_ShowTable_DTO;
 
 import javax.swing.*;
@@ -68,7 +67,7 @@ public class CT_HD_GUI {
     private static CT_HD_BUS busCTHD = new CT_HD_BUS();
     private ArrayList<CT_HD_Product_DTO> productsTemp;
 
-    public CT_HD_GUI(String orderID, JFrame fatherFrame) {
+    public CT_HD_GUI(String orderID, String emId, String emName, String cusId, String cusName, String orderDate, JFrame fatherFrame) {
         fatherFrame.setVisible(false);
         JFrame frame = new JFrame("Quản lý chi tiết đơn hàng");
 
@@ -98,14 +97,14 @@ public class CT_HD_GUI {
 
         // add text field for customer and employee
         order_id_txt.setText(orderID);
-        CT_HD_ShowTTChung_DTO chiTiet = busCTHD.getCusEmDetailByOrderId(orderID);
-        order_date_txt.setText(chiTiet.getOrderDate());
-        emp_id_txt.setText(chiTiet.getEmID());
-        emp_name_txt.setText(chiTiet.getEmName());
-        cus_id_txt.setText(chiTiet.getCusID());
-        cus_name_txt.setText(chiTiet.getCusName());
-        cus_address_txt.setText(chiTiet.getAddress());
-        cus_phone_txt.setText(chiTiet.getPhone());
+        String[] chiTiet = busCTHD.getCusPhoneAddress(cusId).split(":");
+        order_date_txt.setText(orderDate);
+        emp_id_txt.setText(emId);
+        emp_name_txt.setText(emName);
+        cus_id_txt.setText(cusId);
+        cus_name_txt.setText(cusName);
+        cus_address_txt.setText(chiTiet[0]);
+        cus_phone_txt.setText(chiTiet[1]);
 
         // text field read only
         order_date_txt.setEditable(false);

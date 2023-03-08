@@ -201,7 +201,12 @@ public class HoaDon_GUI {
                 if (e.getClickCount() == 2) {
                     int row = HoaDon_table.getSelectedRow();
                     String orderId = HoaDon_table.getValueAt(row, 0).toString();
-                    new CT_HD_GUI(orderId, frame);
+                    String emId = HoaDon_table.getValueAt(row, 1).toString();
+                    String emName = HoaDon_table.getValueAt(row, 2).toString();
+                    String cusId = HoaDon_table.getValueAt(row, 3).toString();
+                    String cusName = HoaDon_table.getValueAt(row, 4).toString();
+                    String orderDate = HoaDon_table.getValueAt(row, 5).toString();
+                    new CT_HD_GUI(orderId, emId, emName, cusId, cusName, orderDate, frame);
                 }
             }
         });

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd428260-f449-43bc-aeea-d2e3859c7e85" name="Changes" comment="fix bug, add order date">
+    <list default="true" id="bd428260-f449-43bc-aeea-d2e3859c7e85" name="Changes" comment="finish Orders">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/HD_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/HD_BUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/HD_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/HD_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/CT_HD_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CT_HD_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/CT_HD_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CT_HD_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/CT_HD_ShowTTChung_DTO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/EmCus_DTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/HD_DTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/HD_DTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/CT_HD_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/CT_HD_GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -142,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678240661977</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="finish Orders">
+      <created>1678259971660</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1678259971660</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,6 +180,7 @@
     <MESSAGE value="add search feature for HoaDonForm" />
     <MESSAGE value="add GUI for HoaDon_GUI" />
     <MESSAGE value="fix bug, add order date" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug, add order date" />
+    <MESSAGE value="finish Orders" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish Orders" />
   </component>
 </project>
