@@ -1,7 +1,6 @@
 package DAO;
 
 import DTO.CT_HD_Product_DTO;
-import DTO.CT_HD_ShowTTChung_DTO;
 import DTO.CT_HD_ShowTable_DTO;
 
 import java.sql.Connection;
@@ -23,9 +22,9 @@ public class CT_HD_DAO {
                     "Where OrderDetail.OrderID = Orders.OrderID " +
                     "and Orders.CustomerID = Customer.CustomerID " +
                     "and OrderDetail.ProductID = Product.ProductID " +
-                    "and Orders.OrderID = " + String.format("'%s'", orderID);
+                    "and Orders.OrderID = ?";
             PreparedStatement st = con.prepareStatement(sql);
-
+            st.setString(1, orderID);
             ResultSet rs = st.executeQuery();
 
             // add each row to arrayList
@@ -75,37 +74,28 @@ public class CT_HD_DAO {
     }
 
     // get data to display on TTChung
-    public CT_HD_ShowTTChung_DTO getCusEmDetailByOrderId(String orderId) {
+    public String getCusPhoneAddress(String customerId) {
         JDBC.openConnection();
-        CT_HD_ShowTTChung_DTO show = new CT_HD_ShowTTChung_DTO();
-
+        String result = "";
         try {
             Connection con = JDBC.getCon();
-            String sql = "Select Customer.CustomerID, Customer.Name CusName, "+
-                    "Employee.EmployeeID EmId, Employee.Name EmName, OrderDate, "+
-                    "Customer.Address, Customer.Phone " +
-                    "from Orders, Employee, Customer " +
-                    "where Orders.EmployeeID = Employee.EmployeeID and Orders.CustomerID = Customer.CustomerID " +
-                    "and Orders.OrderID = '" + orderId + "'";
+            String sql = "Select Address, Phone " +
+                    "from Customer " +
+                    "where CustomerID = ?";
             PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, customerId);
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                show.setCusID(rs.getString("CustomerID"));
-                show.setCusName(rs.getNString("CusName"));
-                show.setEmID(rs.getString("EmId"));
-                show.setEmName(rs.getNString("EmName"));
-                show.setOrderDate(rs.getString("OrderDate"));
-                show.setPhone(rs.getString("Phone"));
-                show.setAddress(rs.getNString("Address"));
+                result += rs.getString("Address") + ":" + rs.getString("Phone");
             }
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return null;
+            return result;
         }
 
         JDBC.closeConnection();
-        return show;
+        return result;
     }
 
     public int updateSLByProOrderId(String proId, String OrderId, int sl) {
