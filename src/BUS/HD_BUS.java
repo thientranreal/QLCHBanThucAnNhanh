@@ -10,4 +10,7 @@ public class HD_BUS {
     public ArrayList<HD_DTO> getAllOrders() {
         return hdDao.getAllOrders();
     }
+    public int addNewHD(String OrderId, String emId, String cusId, String dateTime) {
+        return hdDao.addNewHD(OrderId, emId, cusId, dateTime);
+    }
 }

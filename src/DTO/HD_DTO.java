@@ -1,22 +1,15 @@
 package DTO;
 
-public class HD_DTO {
+public class HD_DTO extends EmCus_DTO {
     private String orderID;
-    private String customerID;
-    private String customerName;
-    private String employeeID;
-    private String employeeName;
     private String orderDate;
 
     public HD_DTO() {
     }
 
-    public HD_DTO(String orderID, String customerID, String customerName, String employeeID, String employeeName, String orderDate) {
+    public HD_DTO(String orderID, String employeeID, String employeeName, String customerID, String customerName, String orderDate) {
+        super(customerID, customerName, employeeID, employeeName);
         this.orderID = orderID;
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.employeeID = employeeID;
-        this.employeeName = employeeName;
         this.orderDate = orderDate;
     }
 
@@ -26,38 +19,6 @@ public class HD_DTO {
 
     public void setOrderID(String orderID) {
         this.orderID = orderID;
-    }
-
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
     }
 
     public String getOrderDate() {
@@ -73,13 +34,13 @@ public class HD_DTO {
             case 0:
                 return orderID;
             case 1:
-                return employeeID;
+                return getEmployeeID();
             case 2:
-                return employeeName;
+                return getEmployeeName();
             case 3:
-                return customerID;
+                return getCustomerID();
             case 4:
-                return customerName;
+                return getCustomerName();
             case 5:
                 return orderDate;
             default:

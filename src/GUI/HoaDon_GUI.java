@@ -10,7 +10,11 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HoaDon_GUI {
     private JPanel HoaDon_panel;
@@ -54,9 +58,13 @@ public class HoaDon_GUI {
     private JPanel time_panel;
     private JButton generate_dtime_btn;
     private JPanel generate_btn_panel;
-    private static ArrayList<HD_DTO> hoaDonList = new ArrayList<>();
+    private JButton get_dtime_now_btn;
+    private static ArrayList<HD_DTO> hoaDonList;
+    private static ArrayList<String> cusEmList;
     private static HD_BUS hdBus = new HD_BUS();
-    private ArrayList<HD_DTO> hoaDonListTemp = new ArrayList<>();
+    private ArrayList<HD_DTO> hoaDonListTemp;
+    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public HoaDon_GUI() {
         JFrame frame = new JFrame("Quản lý hóa đơn");
@@ -68,6 +76,7 @@ public class HoaDon_GUI {
         HoaDon_table.setRowHeight(20);
         HoaDon_table.setDefaultEditor(Object.class, null);
         search_panel.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
+        search_result.setVisibleRowCount(4);
 
 //        Begin
 
@@ -86,9 +95,7 @@ public class HoaDon_GUI {
         }
         search_type.setModel(dModel);
 
-        search_result.setVisibleRowCount(4);
 //        End
-
         frame.pack();
         frame.setLocationRelativeTo(null);
 
@@ -182,6 +189,76 @@ public class HoaDon_GUI {
 
             }
         });
+//        Get current date time button
+        get_dtime_now_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                orderDate_txt.setText(getCurrentDateTime());
+            }
+        });
+//        generate date time button
+        generate_dtime_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String date = String.format("%s-%s-%s",
+                        year_txt.getText().trim(),
+                        month_txt.getText().trim(),
+                        day_txt.getText().trim());
+
+//                add zero in front of time
+                if(hour_txt.getText().length() == 1) {
+                    hour_txt.setText("0" + hour_txt.getText());
+                }
+                if(minute_txt.getText().length() == 1) {
+                    minute_txt.setText("0" + minute_txt.getText());
+                }
+                if(second_txt.getText().length() == 1) {
+                    second_txt.setText("0" + second_txt.getText());
+                }
+                String time = String.format("%s:%s:%s",
+                        hour_txt.getText().trim(),
+                        minute_txt.getText().trim(),
+                        second_txt.getText().trim());
+
+//                check if date is valid
+                try {
+                    df.setLenient(false);
+                    date = df.format(df.parse(date));
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(frame, "Ngày không hợp lệ",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (Integer.parseInt(year_txt.getText().trim()) < 2000) {
+                    JOptionPane.showMessageDialog(frame, "Năm không hợp lệ",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+//                format date time to sql date time
+                try {
+                    orderDate_txt.setText(dtf.format(dtf.parse(date + " " + time)));
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(frame, "Giờ không hợp lệ",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        });
+//        Add hoa don to database
+        add_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String orderId = HDId_txt.getText().trim();
+                String emId = emID_txt.getText().trim();
+                String cusId = cusId_txt.getText().trim();
+                String orderDate = orderDate_txt.getText().trim();
+
+                int updatedRows = hdBus.addNewHD(orderId, emId, cusId, orderDate);
+                JOptionPane.showMessageDialog(frame, String.format("Thêm %d dòng thành công.", updatedRows),
+                        "Updated", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 
 //    Load Hoa Don to hoaDonList
@@ -229,22 +306,27 @@ public class HoaDon_GUI {
 
         return result;
     }
-    private String turnDateToSqlDate(String day, String month, String year) {
-        return String.format("%s-%s-%s", year, month, day);
-    }
-    private String turnTimeToSqlTime(String hour, String minute, String second) {
-        return String.format("%s:%s:%s", hour, minute, second);
+//    Check orderId exist
+    private boolean isOrderIdExist(String orderId) {
+        for (HD_DTO item: hoaDonList) {
+            if (item.getOrderID().equals(orderId)) return true;
+        }
+        return false;
     }
 //    Check date valid
     private boolean isDateValid(String date)
     {
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             df.setLenient(false);
             df.parse(date);
             return true;
         } catch (ParseException e) {
             return false;
         }
+    }
+//    Get current date time
+    private String getCurrentDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 }
