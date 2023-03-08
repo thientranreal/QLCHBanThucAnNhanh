@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HoaDon_GUI {
     private JPanel HoaDon_panel;
@@ -59,10 +58,20 @@ public class HoaDon_GUI {
     private JButton generate_dtime_btn;
     private JPanel generate_btn_panel;
     private JButton get_dtime_now_btn;
+    private JPanel searchCusEm_panel;
+    private JPanel searchCus_panel;
+    private JPanel searchEm_panel;
+    private JTextField sCus_txt;
+    private JList sCus_result;
+    private JTextField sEm_txt;
+    private JList sEm_result;
     private static ArrayList<HD_DTO> hoaDonList;
-    private static ArrayList<String> cusEmList;
+    private static ArrayList<String> employees;
+    private static ArrayList<String> customers;
     private static HD_BUS hdBus = new HD_BUS();
     private ArrayList<HD_DTO> hoaDonListTemp;
+    private ArrayList<String> employeesTemp;
+    private ArrayList<String> customersTemp;
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -76,12 +85,26 @@ public class HoaDon_GUI {
         HoaDon_table.setRowHeight(20);
         HoaDon_table.setDefaultEditor(Object.class, null);
         search_panel.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
+        searchCus_panel.setBorder(BorderFactory.createTitledBorder("Tìm kiếm khách hàng"));
+        searchEm_panel.setBorder(BorderFactory.createTitledBorder("Tìm kiếm nhân viên"));
+        sCus_result.setVisibleRowCount(4);
+        sEm_result.setVisibleRowCount(4);
         search_result.setVisibleRowCount(4);
+        emID_txt.setEditable(false);
+        emName_txt.setEditable(false);
+        cusId_txt.setEditable(false);
+        cusName_txt.setEditable(false);
+        orderDate_txt.setEditable(false);
 
 //        Begin
 
 //        Load data to hoaDonList
         loadHoaDonList();
+//        Load employees and customer
+        employees = hdBus.getAllEm();
+        customers = hdBus.getAllCus();
+        loadEmResultList(sEm_result, employees);
+        loadCusResultList(sCus_result, customers);
 //        Show hoaDonList to JTable
         String[] columns = {"Mã hóa đơn", "Mã nhân viên", "Tên nhân viên",
                 "Mã khách hàng", "Tên khách hàng", "Ngày giờ đặt"};
@@ -254,11 +277,199 @@ public class HoaDon_GUI {
                 String cusId = cusId_txt.getText().trim();
                 String orderDate = orderDate_txt.getText().trim();
 
+//                Check input data
+                if (orderId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã hóa đơn",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    HDId_txt.grabFocus();
+                    return;
+                }
+                if (isOrderIdExist(orderId)) {
+                    JOptionPane.showMessageDialog(frame, "Mã hóa đơn đã tồn tại",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    HDId_txt.grabFocus();
+                    return;
+                }
+                if (emId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã nhân viên",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    emID_txt.grabFocus();
+                    return;
+                }
+                if (cusId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã khách hàng",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    cusId_txt.grabFocus();
+                    return;
+                }
+                if (orderDate.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống ngày giờ đặt",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    orderDate_txt.grabFocus();
+                    return;
+                }
+//                End check input data
+
                 int updatedRows = hdBus.addNewHD(orderId, emId, cusId, orderDate);
                 JOptionPane.showMessageDialog(frame, String.format("Thêm %d dòng thành công.", updatedRows),
                         "Updated", JOptionPane.INFORMATION_MESSAGE);
+
+//                Load data for frame
+                loadHoaDonList();
+                loadTableModel(HoaDon_table, columns, hoaDonList);
             }
         });
+//        End Add hoa don to database
+
+//        Input listener for search customer text field
+        sCus_txt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                String searchStr = sCus_txt.getText();
+//                Empty list for search data
+                customersTemp = new ArrayList<>();
+                for (String item : customers) {
+                    if (item.contains(searchStr)) {
+                        customersTemp.add(item);
+                    }
+                }
+
+//                Show data to list
+                loadCusResultList(sCus_result, customersTemp);
+            }
+        });
+//        End Input listener for search customer text field
+
+//        Input listener for search employee text field
+        sEm_txt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                String searchStr = sEm_txt.getText();
+//                Empty list for search data
+                employeesTemp = new ArrayList<>();
+                for (String item : employees) {
+                    if (item.contains(searchStr)) {
+                        employeesTemp.add(item);
+                    }
+                }
+
+//                Show data to list
+                loadEmResultList(sEm_result, employeesTemp);
+            }
+        });
+//      End Input listener for search employee text field
+
+//        Mouse press event to show to customer name, id text field
+        sCus_result.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                String[] customer = sCus_result.getSelectedValue().toString().split(":");
+                String id = customer[0];
+                String name = customer[1];
+                cusId_txt.setText(id);
+                cusName_txt.setText(name);
+            }
+        });
+//        End Mouse press event to show to customer name, id text field
+
+//        Mouse press event to show to employee name, id text field
+        sEm_result.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                String[] employee = sEm_result.getSelectedValue().toString().split(":");
+                String id = employee[0];
+                String name = employee[1];
+                emID_txt.setText(id);
+                emName_txt.setText(name);
+            }
+        });
+//        End Mouse press event to show to employee name, id text field
+
+//        add event listener for remove button
+        rm_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String orderId = HDId_txt.getText().trim();
+                if (orderId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã hóa đơn",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    HDId_txt.grabFocus();
+                    return;
+                }
+                if (!isOrderIdExist(orderId)) {
+                    JOptionPane.showMessageDialog(frame, "Mã hóa đơn không tồn tại",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    HDId_txt.grabFocus();
+                    return;
+                }
+
+                int updatedRows = hdBus.deleteOrder(orderId);
+                JOptionPane.showMessageDialog(frame, String.format("Xóa %d dòng thành công.", updatedRows),
+                        "Delete", JOptionPane.INFORMATION_MESSAGE);
+
+//                Load data for frame
+                loadHoaDonList();
+                loadTableModel(HoaDon_table, columns, hoaDonList);
+            }
+        });
+//        End add event listener for remove button
+
+//        Add update event for update button
+        update_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String orderId = HDId_txt.getText().trim();
+                String emId = emID_txt.getText().trim();
+                String cusId = cusId_txt.getText().trim();
+                String orderDate = orderDate_txt.getText().trim();
+
+//                Check input data
+                if (orderId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã hóa đơn",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    HDId_txt.grabFocus();
+                    return;
+                }
+                if (!isOrderIdExist(orderId)) {
+                    JOptionPane.showMessageDialog(frame, "Mã hóa đơn không tồn tại",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    HDId_txt.grabFocus();
+                    return;
+                }
+                if (emId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã nhân viên",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    emID_txt.grabFocus();
+                    return;
+                }
+                if (cusId.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã khách hàng",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    cusId_txt.grabFocus();
+                    return;
+                }
+                if (orderDate.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống ngày giờ đặt",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    orderDate_txt.grabFocus();
+                    return;
+                }
+//                End check input data
+
+                int updatedRows = hdBus.updateOrder(orderId, cusId, emId, orderDate);
+                JOptionPane.showMessageDialog(frame, String.format("Sửa %d dòng thành công.", updatedRows),
+                        "Updated", JOptionPane.INFORMATION_MESSAGE);
+
+//                Load data for frame
+                loadHoaDonList();
+                loadTableModel(HoaDon_table, columns, hoaDonList);
+            }
+        });
+//        End add update event for update button
     }
 
 //    Load Hoa Don to hoaDonList
@@ -295,6 +506,22 @@ public class HoaDon_GUI {
         }
         jTable.setModel(model);
     }
+//    Load employee List data
+    private void loadEmResultList(JList jList, ArrayList<String> emList) {
+        DefaultListModel model = new DefaultListModel();
+        for (String item : emList) {
+            model.addElement(item.toString());
+        }
+        jList.setModel(model);
+    }
+//    Load Customer List data
+    private void loadCusResultList(JList jList, ArrayList<String> cusList) {
+        DefaultListModel model = new DefaultListModel();
+        for (String item : cusList) {
+            model.addElement(item.toString());
+        }
+        jList.setModel(model);
+    }
     private ArrayList<HD_DTO> getAllOrdersByCondition(String searchStr, int index) {
         ArrayList<HD_DTO> result = new ArrayList<>();
         for (HD_DTO item : hoaDonList) {
@@ -309,7 +536,7 @@ public class HoaDon_GUI {
 //    Check orderId exist
     private boolean isOrderIdExist(String orderId) {
         for (HD_DTO item: hoaDonList) {
-            if (item.getOrderID().equals(orderId)) return true;
+            if (item.getOrderID().equalsIgnoreCase(orderId)) return true;
         }
         return false;
     }

@@ -13,4 +13,16 @@ public class HD_BUS {
     public int addNewHD(String OrderId, String emId, String cusId, String dateTime) {
         return hdDao.addNewHD(OrderId, emId, cusId, dateTime);
     }
+    public ArrayList<String> getAllEm() {
+        return hdDao.getAllEm();
+    }
+    public ArrayList<String> getAllCus() {
+        return hdDao.getAllCus();
+    }
+    public int deleteOrder(String OrderId) {
+        return hdDao.deleteOrder(OrderId);
+    }
+    public int updateOrder(String OrderId, String CusId, String EmId, String orderDate) {
+        return hdDao.updateOrder(OrderId, CusId, EmId, orderDate);
+    }
 }

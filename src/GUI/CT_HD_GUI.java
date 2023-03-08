@@ -65,6 +65,8 @@ public class CT_HD_GUI {
     private JLabel stock_lb;
     private static ArrayList<CT_HD_ShowTable_DTO> list;
     private static ArrayList<CT_HD_Product_DTO> products;
+    private static CT_HD_BUS busCTHD = new CT_HD_BUS();
+    private ArrayList<CT_HD_Product_DTO> productsTemp;
 
     public CT_HD_GUI(String orderID, JFrame fatherFrame) {
         fatherFrame.setVisible(false);
@@ -78,8 +80,6 @@ public class CT_HD_GUI {
                 fatherFrame.setVisible(true);
             }
         });
-
-        CT_HD_BUS busCTHD = new CT_HD_BUS();
 
         frame.setVisible(true);
         frame.add(CT_HD_panel);
@@ -135,7 +135,8 @@ public class CT_HD_GUI {
 
         // get data from product and show to JList MaSP, TenSP
         products = busCTHD.getProductInfo();
-        loadProductList();
+        productsTemp = busCTHD.getProductInfo();
+        loadProductList(products);
 
         pro_id_ls.setVisibleRowCount(4);
         pro_name_ls.setVisibleRowCount(4);
@@ -155,8 +156,8 @@ public class CT_HD_GUI {
                 }
                 product_id_txt.setText(pro_id_ls.getSelectedValue().toString());
                 pro_name_ls.setSelectedIndex(index);
-                product_desc_txt.setText(products.get(index).getCategory());
-                stock_txt.setText(String.valueOf(products.get(index).getStock()));
+                product_desc_txt.setText(productsTemp.get(index).getCategory());
+                stock_txt.setText(String.valueOf(productsTemp.get(index).getStock()));
             }
         });
 
@@ -169,8 +170,8 @@ public class CT_HD_GUI {
                 }
                 product_name_txt.setText(pro_name_ls.getSelectedValue().toString());
                 pro_id_ls.setSelectedIndex(index);
-                product_desc_txt.setText(products.get(index).getCategory());
-                stock_txt.setText(String.valueOf(products.get(index).getStock()));
+                product_desc_txt.setText(productsTemp.get(index).getCategory());
+                stock_txt.setText(String.valueOf(productsTemp.get(index).getStock()));
             }
         });
         // End data binding for list id and name product 2 way
@@ -187,8 +188,8 @@ public class CT_HD_GUI {
 
                 // force select product JList
                 String proId = CT_HD_table.getModel().getValueAt(row, 3).toString();
-                for (int i = 0; i < products.size(); i++) {
-                    if (proId.equals(products.get(i).getId())) {
+                for (int i = 0; i < productsTemp.size(); i++) {
+                    if (proId.equals(productsTemp.get(i).getId())) {
                         pro_id_ls.setSelectedIndex(i);
                     }
                 }
@@ -267,7 +268,7 @@ public class CT_HD_GUI {
                 busCTHD.updateProductStock(product_id_txt.getText(), slConLai);
 
                 // Load updated data to CT_HD_table, load updated product to products
-                loadDataDisplay(orderID, busCTHD, columns);
+                loadDataDisplay(orderID, columns);
             }
         });
         // End event listener for add product button
@@ -309,10 +310,50 @@ public class CT_HD_GUI {
                 JOptionPane.showMessageDialog(frame, String.format("Xóa thành công %d dòng", updateRow),
                         "Updated", JOptionPane.INFORMATION_MESSAGE);
 
-                loadDataDisplay(orderID, busCTHD, columns);
+                loadDataDisplay(orderID, columns);
             }
         });
         // End add event for delete btn
+
+//        Input listener for product id text
+        product_id_txt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                String proId = product_id_txt.getText();
+
+//                Empty productsTemp for storing new search data
+                productsTemp = new ArrayList<>();
+                for (CT_HD_Product_DTO item : products) {
+                    if (item.getId().contains(proId)) {
+                        productsTemp.add(item);
+                    }
+                }
+//                Load productsTemp to List
+                loadProductList(productsTemp);
+            }
+        });
+//        End Input listener for product id text
+
+//        Input listener for product name text
+        product_name_txt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                String proName = product_name_txt.getText();
+
+//                Empty productsTemp for storing new search data
+                productsTemp = new ArrayList<>();
+                for (CT_HD_Product_DTO item : products) {
+                    if (item.getName().contains(proName)) {
+                        productsTemp.add(item);
+                    }
+                }
+//                Load productsTemp to List
+                loadProductList(productsTemp);
+            }
+        });
+//        End Input listener for product name text
     }
 
     private void loadCT_HD_Table(String[] columns) {
@@ -342,7 +383,7 @@ public class CT_HD_GUI {
         }
         CT_HD_table.setModel(model);
     }
-    private void loadProductList() {
+    private void loadProductList(ArrayList<CT_HD_Product_DTO> products) {
         DefaultListModel<String> modelIdLs = new DefaultListModel<>();
         DefaultListModel<String> modelNameLs = new DefaultListModel<>();
 
@@ -354,12 +395,16 @@ public class CT_HD_GUI {
         pro_id_ls.setModel(modelIdLs);
         pro_name_ls.setModel(modelNameLs);
     }
-    private void loadDataDisplay(String orderID, CT_HD_BUS busCTHD, String[] columns) {
+    private void loadDataDisplay(String orderID, String[] columns) {
         // Load updated data to CT_HD_table, load updated product to products
         list = busCTHD.getCT_HD_ByOrderID(orderID);
         loadCT_HD_Table(columns);
+
+//        Update data for products and products Temp
         products = busCTHD.getProductInfo();
-        loadProductList();
+        productsTemp = busCTHD.getProductInfo();
+
+        loadProductList(products);
 
         // force set index Productid List to 0
         pro_id_ls.setSelectedIndex(0);

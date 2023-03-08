@@ -1,6 +1,5 @@
 package DAO;
 
-import DTO.CT_HD_Product_DTO;
 import DTO.HD_DTO;
 
 import java.sql.Connection;
@@ -64,26 +63,18 @@ public class HD_DAO {
         return updatedRows;
     }
 
-    public ArrayList<HD_DTO> getAllEmCus() {
+    public ArrayList<String> getAllEm() {
         JDBC.openConnection();
-        ArrayList<HD_DTO> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
 
         try {
             Connection con = JDBC.getCon();
-            String sql = "Select OrderID, Customer.CustomerID CusID, Employee.EmployeeID EmID" +
-                    ", OrderDate, Customer.Name CusName, Employee.Name EmName " +
-                    "From Orders, Customer, Employee " +
-                    "Where Customer.CustomerID = Orders.CustomerID and Employee.EmployeeID = Orders.EmployeeID";
+            String sql = "Select EmployeeID, Name From Employee";
             PreparedStatement st = con.prepareStatement(sql);
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                result.add(new HD_DTO(rs.getString("OrderID"),
-                        rs.getString("CusID"),
-                        rs.getNString("CusName"),
-                        rs.getString("EmID"),
-                        rs.getNString("EmName"),
-                        rs.getString("OrderDate")));
+                result.add(rs.getString("EmployeeID") + ":" + rs.getNString("Name"));
             }
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
@@ -93,4 +84,72 @@ public class HD_DAO {
         JDBC.closeConnection();
         return result;
     }
+    public ArrayList<String> getAllCus() {
+        JDBC.openConnection();
+        ArrayList<String> result = new ArrayList<>();
+
+        try {
+            Connection con = JDBC.getCon();
+            String sql = "Select CustomerID, Name From Customer";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getString("CustomerID") + ":" + rs.getNString("Name"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Không lấy được dữ liệu");
+            return null;
+        }
+
+        JDBC.closeConnection();
+        return result;
+    }
+
+    public int deleteOrder(String OrderId) {
+        JDBC.openConnection();
+        int updatedRows = 0;
+
+        try {
+            Connection con = JDBC.getCon();
+            String sql = "Delete From Orders Where OrderID = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, OrderId);
+
+            updatedRows = st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Không lấy được dữ liệu");
+            return updatedRows;
+        }
+
+        JDBC.closeConnection();
+        return updatedRows;
+    }
+
+    public int updateOrder(String OrderId, String CusId, String EmId, String orderDate) {
+        JDBC.openConnection();
+        int updatedRows = 0;
+
+        try {
+            Connection con = JDBC.getCon();
+            String sql = "Update Orders Set CustomerID = ?, EmployeeID = ?, OrderDate = ? " +
+                    "Where OrderID = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, CusId);
+            st.setString(2, EmId);
+            st.setString(3, orderDate);
+            st.setString(4, OrderId);
+
+            updatedRows = st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Không lấy được dữ liệu");
+            return updatedRows;
+        }
+
+        JDBC.closeConnection();
+        return updatedRows;
+    }
+
 }
