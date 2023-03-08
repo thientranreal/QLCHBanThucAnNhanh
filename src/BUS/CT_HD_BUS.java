@@ -2,7 +2,6 @@ package BUS;
 
 import DAO.CT_HD_DAO;
 import DTO.CT_HD_Product_DTO;
-import DTO.CT_HD_ShowTTChung_DTO;
 import DTO.CT_HD_ShowTable_DTO;
 
 import java.util.ArrayList;
@@ -15,8 +14,8 @@ public class CT_HD_BUS {
     public ArrayList<CT_HD_Product_DTO> getProductInfo() {
         return daoCTHD.getProductInfo();
     }
-    public CT_HD_ShowTTChung_DTO getCusEmDetailByOrderId(String orderID) {
-        return daoCTHD.getCusEmDetailByOrderId(orderID);
+    public String getCusPhoneAddress(String customerId) {
+        return daoCTHD.getCusPhoneAddress(customerId);
     }
     public int updateSLByProOrderId(String proId, String OrderId, int sl) {
         return daoCTHD.updateSLByProOrderId(proId, OrderId, sl);

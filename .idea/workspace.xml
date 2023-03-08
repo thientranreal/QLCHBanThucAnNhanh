@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd428260-f449-43bc-aeea-d2e3859c7e85" name="Changes" comment="fix bug, add order date">
+    <list default="true" id="bd428260-f449-43bc-aeea-d2e3859c7e85" name="Changes" comment="finish Orders optimize">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/HD_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/HD_BUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/HD_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/HD_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/EmCus_DTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/HD_DTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/HD_DTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/CT_HD_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/CT_HD_GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,19 +32,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;false&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;184&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;291&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/ProgramData/GitHub/QLCHBanThucAnNhanh&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "184",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "291",
+    "last_opened_file_path": "D:/ProgramData/GitHub/QLCHBanThucAnNhanh",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="CT_HD_DAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DAO.CT_HD_DAO" />
@@ -142,7 +138,21 @@
       <option name="project" value="LOCAL" />
       <updated>1678240661977</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="finish Orders">
+      <created>1678259971660</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1678259971660</updated>
+    </task>
+    <task id="LOCAL-00006" summary="finish Orders optimize">
+      <created>1678273981521</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1678273981521</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,6 +183,9 @@
     <MESSAGE value="add search feature for HoaDonForm" />
     <MESSAGE value="add GUI for HoaDon_GUI" />
     <MESSAGE value="fix bug, add order date" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug, add order date" />
+    <MESSAGE value="finish Orders" />
+    <MESSAGE value="finish Orders 2" />
+    <MESSAGE value="finish Orders optimize" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish Orders optimize" />
   </component>
 </project>
