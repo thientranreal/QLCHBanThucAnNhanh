@@ -5,6 +5,7 @@ import DTO.HD_DTO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -186,6 +187,10 @@ public class HoaDon_GUI {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+//                if not item is selected
+                if (search_result.getSelectedIndex() < 0) {
+                    return;
+                }
                 String thisValue = search_result.getSelectedValue().toString();
                 int index = search_type.getSelectedIndex();
                 if (index == -1) return;
@@ -372,6 +377,10 @@ public class HoaDon_GUI {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                if (sCus_result.getSelectedIndex() < 0) {
+                    return;
+                }
+
                 String[] customer = sCus_result.getSelectedValue().toString().split(":");
                 String id = customer[0];
                 String name = customer[1];
@@ -386,6 +395,10 @@ public class HoaDon_GUI {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                if (sEm_result.getSelectedIndex() < 0) {
+                    return;
+                }
+
                 String[] employee = sEm_result.getSelectedValue().toString().split(":");
                 String id = employee[0];
                 String name = employee[1];
