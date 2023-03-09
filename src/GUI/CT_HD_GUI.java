@@ -150,7 +150,7 @@ public class CT_HD_GUI {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int index = pro_id_ls.getSelectedIndex();
-                if (index == -1) {
+                if (index < 0) {
                     return;
                 }
                 product_id_txt.setText(pro_id_ls.getSelectedValue().toString());
@@ -164,7 +164,7 @@ public class CT_HD_GUI {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int index = pro_name_ls.getSelectedIndex();
-                if (index == -1) {
+                if (index < 0) {
                     return;
                 }
                 product_name_txt.setText(pro_name_ls.getSelectedValue().toString());

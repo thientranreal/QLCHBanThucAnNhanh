@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/CT_HD_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/CT_HD_GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/HoaDon_GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +43,8 @@
     "last_opened_file_path": "D:/ProgramData/GitHub/QLCHBanThucAnNhanh",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RunManager" selected="Application.Main">
@@ -152,7 +154,42 @@
       <option name="project" value="LOCAL" />
       <updated>1678273981521</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="finish Orders optimize">
+      <created>1678280084546</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1678280084546</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+      <created>1678280581357</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1678280581357</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Merge remote-tracking branch 'origin/master'">
+      <created>1678280832047</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1678280832047</updated>
+    </task>
+    <task id="LOCAL-00010" summary="finish Orders optimize">
+      <created>1678281106770</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1678281106770</updated>
+    </task>
+    <task id="LOCAL-00011" summary="finish Orders optimize">
+      <created>1678281215310</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1678281215310</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +222,8 @@
     <MESSAGE value="fix bug, add order date" />
     <MESSAGE value="finish Orders" />
     <MESSAGE value="finish Orders 2" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="finish Orders optimize" />
     <option name="LAST_COMMIT_MESSAGE" value="finish Orders optimize" />
   </component>
