@@ -1,4 +1,3 @@
-import GUI.CT_HD_GUI;
 import GUI.HoaDon_GUI;
 
 public class Main {

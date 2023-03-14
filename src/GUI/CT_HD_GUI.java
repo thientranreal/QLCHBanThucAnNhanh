@@ -10,6 +10,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CT_HD_GUI {
@@ -62,6 +66,8 @@ public class CT_HD_GUI {
     private JButton addPro_btn;
     private JTextField stock_txt;
     private JLabel stock_lb;
+    private JButton printOrder_btn;
+    private JPanel Button_Pnl;
     private static ArrayList<CT_HD_ShowTable_DTO> list;
     private static ArrayList<CT_HD_Product_DTO> products;
     private static CT_HD_BUS busCTHD = new CT_HD_BUS();
@@ -353,6 +359,29 @@ public class CT_HD_GUI {
             }
         });
 //        End Input listener for product name text
+
+//        Print order click listener
+        printOrder_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (list.size() == 0) {
+                    JOptionPane.showMessageDialog(frame, "Khách hàng chưa mua sản phẩm",
+                            "Info", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                try {
+//                    make directory for customer
+                    new File(cusId).mkdir();
+                    writeFile(String.format("%s/%s.txt", cusId ,orderID), makeCTHDString());
+                    JOptionPane.showMessageDialog(frame, "Xuất hóa đơn thành công",
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frame, "Không xuất được hóa đơn",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+//        End Print order click listener
     }
 
     private void loadCT_HD_Table(String[] columns) {
@@ -430,5 +459,38 @@ public class CT_HD_GUI {
             if (item.getId().equals(proId)) return true;
         }
         return false;
+    }
+//    make order string
+    private String makeCTHDString() {
+        String title = "Hóa đơn mua hàng\n";
+        String separator = "===================================\n";
+        String generalInfo = String.format("Mã HD: %s\n" +
+                "Ngày bán: %s\n" +
+                "Thông tin nhân viên: %s-%s\n" +
+                "Thông tin khách hàng: %s-%s\n", order_id_txt.getText(),
+                order_date_txt.getText(),
+                emp_id_txt.getText(),
+                emp_name_txt.getText(),
+                cus_id_txt.getText(),
+                cus_name_txt.getText());
+        String productHeader = String.format("%-8s%-30s%-8s%-15s\n", "Mã SP", "Tên SP", "SL", "Đơn giá");
+        String productList = "";
+        for (CT_HD_ShowTable_DTO item: list) {
+            productList += String.format("%-8s%-30s%-8s%-15s\n", item.getProductID(),
+                    item.getProductName(),
+                    item.getQuantity(),
+                    item.getPrice());
+        }
+        String thanhTien = "Thành tiền: " + total_price_txt.getText();
+        return title + separator + generalInfo + separator +
+                productHeader + productList + separator + thanhTien;
+    }
+//    Write hoa don to file
+    public void writeFile(String filename, String text) throws IOException {
+        FileWriter fw = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(text);
+        bw.close();
+        fw.close();
     }
 }
