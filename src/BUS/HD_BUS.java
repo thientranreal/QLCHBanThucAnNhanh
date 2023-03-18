@@ -25,4 +25,7 @@ public class HD_BUS {
     public int updateOrder(String OrderId, String CusId, String EmId, String orderDate) {
         return hdDao.updateOrder(OrderId, CusId, EmId, orderDate);
     }
+    public int deleteOrderAndAllProduct(String OrderId) {
+        return hdDao.deleteOrderAndAllProduct(OrderId);
+    }
 }

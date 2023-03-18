@@ -61,10 +61,9 @@ public class ThongKe_GUI {
 
 //        Load data to productList
         productList = tkBus.getAllProduct();
-        productListTemp = tkBus.getAllProduct();
 
 //        Load data to JList
-        loadProductSearchList(product_search_ls, productListTemp);
+        loadProductSearchList(product_search_ls, productList);
 
 //        Load day for combo box
         loadDateCb(from_day_cb, 31);

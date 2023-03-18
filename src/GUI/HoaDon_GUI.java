@@ -215,13 +215,7 @@ public class HoaDon_GUI {
                 }
             }
         });
-//        Add button hoa don event
-        add_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
 //        Get current date time button
         get_dtime_now_btn.addActionListener(new ActionListener() {
             @Override
@@ -426,6 +420,17 @@ public class HoaDon_GUI {
                 }
 
                 int updatedRows = hdBus.deleteOrder(orderId);
+
+//                If order contains product from orderdetail
+                if (updatedRows == 0) {
+                    int option = JOptionPane.showConfirmDialog(frame, "Hóa đơn đang chứa sản phẩm bạn có muốn xóa tất cả sản phẩm không",
+                            "Lưu ý" ,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (option == JOptionPane.NO_OPTION) {
+                        return;
+                    }
+                    updatedRows = hdBus.deleteOrderAndAllProduct(orderId);
+                }
+
                 JOptionPane.showMessageDialog(frame, String.format("Xóa %d dòng thành công.", updatedRows),
                         "Delete", JOptionPane.INFORMATION_MESSAGE);
 
@@ -528,7 +533,7 @@ public class HoaDon_GUI {
     private void loadEmResultList(JList jList, ArrayList<String> emList) {
         DefaultListModel model = new DefaultListModel();
         for (String item : emList) {
-            model.addElement(item.toString());
+            model.addElement(item);
         }
         jList.setModel(model);
     }
@@ -536,14 +541,13 @@ public class HoaDon_GUI {
     private void loadCusResultList(JList jList, ArrayList<String> cusList) {
         DefaultListModel model = new DefaultListModel();
         for (String item : cusList) {
-            model.addElement(item.toString());
+            model.addElement(item);
         }
         jList.setModel(model);
     }
     private ArrayList<HD_DTO> getAllOrdersByCondition(String searchStr, int index) {
         ArrayList<HD_DTO> result = new ArrayList<>();
         for (HD_DTO item : hoaDonList) {
-            String t = item.getByIndex(index);
             if (item.getByIndex(index).contains(searchStr)) {
                 result.add(item);
             }

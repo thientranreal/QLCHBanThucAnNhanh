@@ -127,6 +127,32 @@ public class HD_DAO {
         return updatedRows;
     }
 
+    public int deleteOrderAndAllProduct(String OrderId) {
+        JDBC.openConnection();
+        int updatedRows = 0;
+
+        try {
+            Connection con = JDBC.getCon();
+            String sql = "Delete From OrderDetail Where OrderID = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, OrderId);
+            st.executeUpdate();
+
+            sql = "Delete From Orders Where OrderID = ?";
+            st = con.prepareStatement(sql);
+            st.setString(1, OrderId);
+
+            updatedRows = st.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Không lấy được dữ liệu");
+            return updatedRows;
+        }
+
+        JDBC.closeConnection();
+        return updatedRows;
+    }
+
     public int updateOrder(String OrderId, String CusId, String EmId, String orderDate) {
         JDBC.openConnection();
         int updatedRows = 0;
