@@ -75,10 +75,11 @@ public class HoaDon_GUI {
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public HoaDon_GUI() {
-        JFrame frame = new JFrame("Quản lý hóa đơn");
-        frame.add(HoaDon_panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public HoaDon_GUI(JFrame frame) {
+//        JFrame frame = new JFrame("Quản lý hóa đơn");
+//        frame.add(HoaDon_panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         HoaDon_panel.setBorder(new EmptyBorder(5, 10, 5, 10));
         show_info.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
         HoaDon_table.setRowHeight(20);
@@ -119,9 +120,9 @@ public class HoaDon_GUI {
 
 //        End
 
-        frame.pack();
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
+//        frame.pack();
+//        frame.setVisible(true);
+//        frame.setLocationRelativeTo(null);
 
 //        Data binding from table to text field
         HoaDon_table.addMouseListener(new MouseAdapter() {
@@ -495,13 +496,16 @@ public class HoaDon_GUI {
 //        End add update event for update button
     }
 
+    public JPanel getHoaDon_panel() {
+        return HoaDon_panel;
+    }
 //    Load Hoa Don to hoaDonList
-    public void loadHoaDonList() {
+    private void loadHoaDonList() {
         hoaDonList = hdBus.getAllOrders();
     }
 
 //    Load hoaDonList to table model
-    public void loadTableModel(JTable jTable, String[] columns, ArrayList<HD_DTO> list) {
+    private void loadTableModel(JTable jTable, String[] columns, ArrayList<HD_DTO> list) {
         DefaultTableModel model = new DefaultTableModel(null, columns);
         byte i;
         Object[] rows = new Object[6];

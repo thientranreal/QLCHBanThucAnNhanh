@@ -45,10 +45,10 @@ public class ThongKe_GUI {
     private ArrayList<ThongKe_DTO> thongKeList;
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ThongKe_GUI() {
-        JFrame frame = new JFrame("Thống kê sản phẩm");
-        frame.add(thongKe_pnl);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public ThongKe_GUI(JFrame frame) {
+//        JFrame frame = new JFrame("Thống kê sản phẩm");
+//        frame.add(thongKe_pnl);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         thongKe_pnl.setBorder(new EmptyBorder(5, 10, 5, 10));
 //        Set height for search product list
         product_search_ls.setVisibleRowCount(4);
@@ -81,9 +81,9 @@ public class ThongKe_GUI {
 
 
 
-        frame.pack();
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
+//        frame.pack();
+//        frame.setVisible(true);
+//        frame.setLocationRelativeTo(null);
 
 //        click event for product_search_ls
         product_search_ls.addMouseListener(new MouseAdapter() {
@@ -152,6 +152,11 @@ public class ThongKe_GUI {
                 tongDT_txt.setText(String.format("%,.2f", tinhTongDT()));
             }
         });
+    }
+
+//    getPanel
+    public JPanel getThongKe_pnl() {
+        return thongKe_pnl;
     }
 
 //    Load data to list

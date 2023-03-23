@@ -234,8 +234,8 @@ public class CT_HD_GUI {
                     return;
                 }
 
-                if (sl <= 0) {
-                    JOptionPane.showMessageDialog(frame, "Số lượng phải lớn hơn 0", "Error", JOptionPane.ERROR_MESSAGE);
+                if (sl == 0) {
+                    JOptionPane.showMessageDialog(frame, "Số lượng phải khác 0", "Error", JOptionPane.ERROR_MESSAGE);
                     product_quantity_txt.grabFocus();
                     return;
                 }
@@ -251,10 +251,26 @@ public class CT_HD_GUI {
                 int updatedRow;
                 // update product quantity
                 if (isProductExistInOrder(product_id_txt.getText())) {
+//                kiem tra so luong giam khong vuot qua so luong mua
+                    int slHienTai = -99999;
+//                    Lay so luong hien tai cua san pham
+                    for (CT_HD_ShowTable_DTO item : list) {
+                        if (item.getProductID().equals(product_id_txt.getText())) {
+                            slHienTai = item.getQuantity();
+                            break;
+                        }
+                    }
+                    if (sl < 0 && -sl >= slHienTai && slHienTai != -99999) {
+                        JOptionPane.showMessageDialog(frame, "Số lượng cần giảm vượt quá hoặc bằng số lượng mua",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        product_quantity_txt.grabFocus();
+                        return;
+                    }
+
                     // find sl cu in list then add to sl moi
                     for (CT_HD_ShowTable_DTO item : list) {
                         if (item.getProductID().equals(product_id_txt.getText())) {
-                            sl = sl + item.getQuantity();
+                            sl = item.getQuantity() + sl;
                             break;
                         }
                     }
@@ -264,6 +280,13 @@ public class CT_HD_GUI {
                             "Updated", JOptionPane.INFORMATION_MESSAGE);
                 } // add new product to order detail
                 else {
+//                    When add new product cannot add negative quantity
+                    if (sl < 0) {
+                        JOptionPane.showMessageDialog(frame, "Số lượng phải lớn hơn 0", "Error", JOptionPane.ERROR_MESSAGE);
+                        product_quantity_txt.grabFocus();
+                        return;
+                    }
+
                     updatedRow = busCTHD.addNewCT_HD(product_id_txt.getText(), order_id_txt.getText(), sl);
                     JOptionPane.showMessageDialog(frame, String.format("Thêm thành công %d dòng", updatedRow),
                             "Updated", JOptionPane.INFORMATION_MESSAGE);
