@@ -16,8 +16,8 @@ public class JDBC {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String connectionStr = "jdbc:sqlserver://localhost:1433;"+
                     "databaseName=FastFood;"+
-                    "user=sa;"+
-                    "password=123456;"+
+                    "user=huy;"+
+                    "password=7008;"+
                     "encrypt=true;trustServerCertificate=true";
             con = DriverManager.getConnection(connectionStr);
             return true;
@@ -34,4 +34,14 @@ public class JDBC {
             System.out.println(ex);
         }
     }
+
+//    public static void main(String[] args) {
+//        JDBC conn = new JDBC();
+//        if (conn.openConnection()) {
+//            System.out.printf("Success!");
+//        } else {
+//            System.out.printf("Failed!");
+//        }
+//        closeConnection();
+//    }
 }
