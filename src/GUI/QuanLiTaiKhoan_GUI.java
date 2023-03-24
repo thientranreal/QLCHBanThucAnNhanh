@@ -37,11 +37,11 @@ public class QuanLiTaiKhoan_GUI {
     private JButton delBtn;
     private JTextField searchInput;
 
-    public QuanLiTaiKhoan_GUI() {
+    public QuanLiTaiKhoan_GUI(JFrame frame) {
 //      --------------FRAME---------------
-        JFrame frame = new JFrame();
-        frame.setTitle("Quản lí Tài khoản");
-        frame.add(container);
+//        JFrame frame = new JFrame();
+//        frame.setTitle("Quản lí Tài khoản");
+//        frame.add(container);
 //        SearchResultList.setVisibleRowCount(6);
 
 //      --------------TABLE---------------
@@ -68,7 +68,7 @@ public class QuanLiTaiKhoan_GUI {
         idInput.setMargin(new Insets(2, 6, 2, 6));
         userInput.setMargin(new Insets(2, 6, 2, 6));
         searchInput.setMargin(new Insets(2, 6, 2, 6));
-        accessCbx.setSelectedItem(accessList.get(0));
+        accessCbx.setSelectedItem(accessList.get(0).getAuthority());
         SearchCbx.setSelectedItem("Mã Tài Khoản");
 
         searchInput.addKeyListener(new KeyAdapter() {
@@ -199,12 +199,12 @@ public class QuanLiTaiKhoan_GUI {
         });
 
 //      --------------CONFIG---------------
-        frame.setMinimumSize(new Dimension(1000, 600));
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+//        frame.setMinimumSize(new Dimension(1000, 600));
+//        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setLocationRelativeTo(null);
+//        frame.setVisible(true);
     }
 
     public void updateTable(DefaultTableModel tableModel, ArrayList<Account_DTO> AccountList) {
@@ -221,7 +221,7 @@ public class QuanLiTaiKhoan_GUI {
         tableModel.fireTableDataChanged();
     }
 
-    public JPanel QLTK() {
+    public JPanel getQLTKPnl() {
         return container;
     }
 }
