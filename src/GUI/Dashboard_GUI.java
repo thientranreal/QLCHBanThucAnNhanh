@@ -74,24 +74,24 @@ public class Dashboard_GUI {
         }
 
         cardLayout = (CardLayout)(pnShow.getLayout());
-        ImageIcon imageIconTitle = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-brand.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+        ImageIcon imageIconTitle = new ImageIcon(new ImageIcon("src/img/icon-brand.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
 //        ImageIcon imageIconTitle = new ImageIcon(new ImageIcon(getClass().getResource("./img/icon-brand.png")));
 //        ImageIcon imageIconTitle = new ImageIcon(new ImageIcon("./img/icon-brand.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
 
         lbTitle.setIcon(imageIconTitle);
-        ImageIcon imageIconOrder = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-order.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconOrder = new ImageIcon(new ImageIcon("src/img/icon-order.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbOrder.setIcon(imageIconOrder);
-        ImageIcon imageIconProduct = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-product.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconProduct = new ImageIcon(new ImageIcon("src/img/icon-product.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbProduct.setIcon(imageIconProduct);
-        ImageIcon imageIconEmp = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-employee.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconEmp = new ImageIcon(new ImageIcon("src/img/icon-employee.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbEmp.setIcon(imageIconEmp);
-        ImageIcon imageIconCus = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-customer.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconCus = new ImageIcon(new ImageIcon("src/img/icon-customer.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbCus.setIcon(imageIconCus);
-        ImageIcon imageIconAcc = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-account.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconAcc = new ImageIcon(new ImageIcon("src/img/icon-account.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbAcc.setIcon(imageIconAcc);
-        ImageIcon imageIconState = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-state.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconState = new ImageIcon(new ImageIcon("src/img/icon-state.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbState.setIcon(imageIconState);
-        ImageIcon imageIconLogOut = new ImageIcon(new ImageIcon("E:\\Java\\QLCHBanThucAnNhanh\\src\\img\\icon-logout.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+        ImageIcon imageIconLogOut = new ImageIcon(new ImageIcon("src/img/icon-logout.png").getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         lbLogOut.setIcon(imageIconLogOut);
 
 
