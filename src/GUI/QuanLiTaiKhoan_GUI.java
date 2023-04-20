@@ -68,7 +68,7 @@ public class QuanLiTaiKhoan_GUI {
         idInput.setMargin(new Insets(2, 6, 2, 6));
         userInput.setMargin(new Insets(2, 6, 2, 6));
         searchInput.setMargin(new Insets(2, 6, 2, 6));
-        accessCbx.setSelectedItem(accessList.get(0).getAuthority());
+        accessCbx.setSelectedItem(accessList.get(0));
         SearchCbx.setSelectedItem("Mã Tài Khoản");
 
         searchInput.addKeyListener(new KeyAdapter() {
@@ -221,7 +221,10 @@ public class QuanLiTaiKhoan_GUI {
         tableModel.fireTableDataChanged();
     }
 
-    public JPanel getQLTKPnl() {
+    public JPanel QLTK() {
         return container;
     }
+
+
+
 }

@@ -57,7 +57,7 @@
         <properties>
           <background color="-1246977"/>
           <foreground color="-16777216"/>
-          <margin top="2" left="6" bottom="2" right="6"/>
+          <margin top="4" left="12" bottom="4" right="12"/>
           <selectionColor color="-16733521"/>
         </properties>
       </component>
@@ -151,7 +151,9 @@
             <maximum-size width="-1" height="10"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+        </properties>
         <border type="none"/>
         <children/>
       </grid>
@@ -178,7 +180,9 @@
             <maximum-size width="-1" height="10"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+        </properties>
         <border type="none"/>
         <children/>
       </grid>
@@ -191,7 +195,9 @@
             <maximum-size width="-1" height="10"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+        </properties>
         <border type="none"/>
         <children/>
       </grid>
