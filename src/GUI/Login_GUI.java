@@ -5,7 +5,6 @@ import BUS.Account_BUS;
 import DTO.Account_DTO;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -62,9 +61,10 @@ public class Login_GUI {
                 if (result != null) {
                     String power = accessBUS.getAccessFromID(result.getAccessID()).getAuthority();
                     if(power.equals("Admin")) {
-                        System.out.println("Quyen Admin");
+//                        System.out.println("Quyen Admin");
+                        new Dashboard_GUI(result.getUsername(),power,frame);
                     } else {
-                        System.out.println("None");
+                        new Dashboard_GUI(result.getUsername(),power,frame);
                     }
                 } else {
                     LoginFailedLb.setVisible(true);
@@ -105,7 +105,13 @@ public class Login_GUI {
         ShowHidePass.setForeground(Color.black);
     }
 
-    public JPanel Login() {
-        return mainPanel;
+//    public JPanel Login() {
+//        return mainPanel;
+//    }
+//
+        public static void main(String[] args) {
+
+        new Login_GUI();
+
     }
 }
