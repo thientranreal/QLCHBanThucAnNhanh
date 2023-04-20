@@ -77,34 +77,6 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
         txtSearch.addKeyListener(this);
         searchList.addMouseListener(this);
         tableSP.addMouseListener(this);
-        //Xử lý sự kiện cho bảng sản phẩm
-//        tableSP.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(MouseEvent e) {
-////                int row = tableSP.rowAtPoint(e.getPoint());
-////                int col = tableSP.columnAtPoint(e.getPoint());
-//                int column = tableSP.getSelectedColumn();
-//                int row = tableSP.getSelectedRow();
-//                String value1 = tableSP.getValueAt(row,0).toString();
-//                String value2 = tableSP.getValueAt(row,1).toString();
-//                String value3 = tableSP.getValueAt(row,2).toString();
-//                String value4 = tableSP.getValueAt(row,3).toString();
-//                String value5 = tableSP.getValueAt(row,4).toString();
-//                String value6 = tableSP.getValueAt(row,5).toString();
-//                String value7 = tableSP.getValueAt(row,6).toString();
-//
-//
-//                txtMa.setText(value1);
-//                txtTen.setText(value2);
-//                txtGia.setText(value3);
-//                txtCalories.setText(value4);
-//                txtSoLuong.setText(value5);
-//                txtLoai.setText(value6);
-//                cbMaNCC.setSelectedItem(value7);
-//
-//                String value = tableSP.getModel().getValueAt(row, column).toString();
-//
-//            }
-//        });
 
 
 
