@@ -31,6 +31,7 @@ public class HD_DAO {
                         rs.getString("OrderDate")));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }
@@ -56,7 +57,6 @@ public class HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
@@ -77,6 +77,7 @@ public class HD_DAO {
                 result.add(rs.getString("EmployeeID") + ":" + rs.getNString("Name"));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }
@@ -98,6 +99,7 @@ public class HD_DAO {
                 result.add(rs.getString("CustomerID") + ":" + rs.getNString("Name"));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }
@@ -120,7 +122,6 @@ public class HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
@@ -146,7 +147,6 @@ public class HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
@@ -171,7 +171,6 @@ public class HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();

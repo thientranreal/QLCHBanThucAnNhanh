@@ -219,10 +219,14 @@ public class ThongKe_GUI {
 
 //    Tính tổng doanh thu
     private float tinhTongDT() {
-        float sum = 0;
-        for (ThongKe_DTO item : thongKeList) {
-            sum += item.getTotalPrice();
+        try {
+            float sum = 0;
+            for (ThongKe_DTO item : thongKeList) {
+                sum += item.getTotalPrice();
+            }
+            return sum;
+        } catch (NullPointerException ex) {
+            return 0;
         }
-        return sum;
     }
 }

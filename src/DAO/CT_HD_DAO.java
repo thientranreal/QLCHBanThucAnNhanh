@@ -41,6 +41,7 @@ public class CT_HD_DAO {
                 list.add(ct);
             }
         } catch (SQLException ex) {
+            JDBC.closeConnection();
             return null;
         }
 
@@ -65,6 +66,7 @@ public class CT_HD_DAO {
                         rs.getInt("Stock")));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }
@@ -91,7 +93,6 @@ public class CT_HD_DAO {
             }
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return result;
         }
 
         JDBC.closeConnection();
@@ -113,7 +114,6 @@ public class CT_HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
@@ -136,7 +136,6 @@ public class CT_HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
@@ -156,7 +155,6 @@ public class CT_HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
@@ -177,7 +175,6 @@ public class CT_HD_DAO {
 
         } catch (SQLException e) {
             System.out.println("Không lấy được dữ liệu");
-            return updatedRows;
         }
 
         JDBC.closeConnection();
