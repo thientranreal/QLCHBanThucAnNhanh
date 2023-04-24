@@ -69,7 +69,7 @@ public class HD_DAO {
 
         try {
             Connection con = JDBC.getCon();
-            String sql = "Select EmployeeID, Name From Employee";
+            String sql = "Select EmployeeID, Name From Employee Where Status = 1";
             PreparedStatement st = con.prepareStatement(sql);
 
             ResultSet rs = st.executeQuery();
@@ -91,7 +91,7 @@ public class HD_DAO {
 
         try {
             Connection con = JDBC.getCon();
-            String sql = "Select CustomerID, Name From Customer";
+            String sql = "Select CustomerID, Name From Customer Where Status = 1";
             PreparedStatement st = con.prepareStatement(sql);
 
             ResultSet rs = st.executeQuery();

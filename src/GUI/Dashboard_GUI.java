@@ -137,6 +137,8 @@ public class Dashboard_GUI {
                 pnAcc.setBackground(DefaultColor);
                 pnState.setBackground(DefaultColor);
 
+                hoaDonGui.renderCusResultList();
+                hoaDonGui.renderCusResultList();
                 //show pn
                 cardLayout.show(pnShow,"pn2");
             }

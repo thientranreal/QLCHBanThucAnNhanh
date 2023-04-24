@@ -17,8 +17,8 @@ public class CT_HD_DAO {
         try {
             Connection con = JDBC.getCon();
             String sql = "Select Orders.OrderID, Customer.CustomerID, Customer.Name CustomerName, "+
-                    "Product.ProductID, Product.Name ProductName, Quantity, Price" +
-                    " from OrderDetail, Orders, Customer, Product " +
+                    "Product.ProductID, Product.Name ProductName, Quantity, Price " +
+                    "From OrderDetail, Orders, Customer, Product " +
                     "Where OrderDetail.OrderID = Orders.OrderID " +
                     "and Orders.CustomerID = Customer.CustomerID " +
                     "and OrderDetail.ProductID = Product.ProductID " +
@@ -55,7 +55,7 @@ public class CT_HD_DAO {
 
         try {
             Connection con = JDBC.getCon();
-            String sql = "Select ProductID, Name, Category, Stock from Product";
+            String sql = "Select ProductID, Name, Category, Stock from Product Where Status = 1";
             PreparedStatement st = con.prepareStatement(sql);
 
             ResultSet rs = st.executeQuery();
