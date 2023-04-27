@@ -14,14 +14,13 @@ public class product_DTO {
 
     }
 
-    public product_DTO(String productID, String productName, float price, float calories, int stocks, String category, String supplierID) {
+    public product_DTO(String productID, String productName, float price, float calories, int stocks, String category) {
         this.productID = productID;
         this.productName = productName;
         this.price = price;
         this.calories = calories;
         this.stocks = stocks;
         this.category = category;
-        this.supplierID = supplierID;
 
     }
 
@@ -73,12 +72,6 @@ public class product_DTO {
         this.category = category;
     }
 
-    public String getSupplierID() {
-        return supplierID;
-    }
 
-    public void setSupplierID(String supplierID) {
-        this.supplierID = supplierID;
-    }
 
 }

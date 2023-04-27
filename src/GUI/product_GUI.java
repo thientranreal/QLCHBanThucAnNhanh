@@ -33,7 +33,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
     private JComboBox cbMaNCC;
     JFrame frame;
     product_BUS productBus = new product_BUS();
-    public String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Giá", "Calories", "Số lượng","Loại sản phẩm", "Mã NCC"};
+    public String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Giá", "Calories", "Số lượng","Loại sản phẩm"};
     ArrayList<product_DTO> listProduct= productBus.getAllProduct();
 
 
@@ -55,11 +55,11 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
         cbSearch.setModel(searchsList);
 
 //        Xử lý combobox mã ncc
-        DefaultComboBoxModel cbSupplier = new DefaultComboBoxModel();
-        for (String item : productBus.getAllSupplierID()){
-            cbSupplier.addElement(item);
-        }
-        cbMaNCC.setModel(cbSupplier);
+//        DefaultComboBoxModel cbSupplier = new DefaultComboBoxModel();
+//        for (String item : productBus.getAllSupplierID()){
+//            cbSupplier.addElement(item);
+//        }
+//        cbMaNCC.setModel(cbSupplier);
 
 
 //        render dữ liệu ra table
@@ -102,7 +102,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
         txtGia.setText("");
         txtCalories.setText("");
         txtSoLuong.setText("");
-        cbMaNCC.setSelectedItem("NC01");
+//        cbMaNCC.setSelectedItem("NC01");
     }
 
     public JTable getTableSP(){
@@ -121,7 +121,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
             String price = txtGia.getText().trim();
             String calories = txtCalories.getText().trim();
             String stock = txtSoLuong.getText().trim();
-            String supplierID = String.valueOf(cbMaNCC.getSelectedItem());
+//            String supplierID = String.valueOf(cbMaNCC.getSelectedItem());
             if(productID.equals("")){
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã sản phâm",
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -191,7 +191,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
                 txtSoLuong.grabFocus();
                 return;
             }
-            product_DTO p = new product_DTO(productID,name,Float.parseFloat(price),Float.parseFloat(calories),Integer.parseInt(stock),category,supplierID);
+            product_DTO p = new product_DTO(productID,name,Float.parseFloat(price),Float.parseFloat(calories),Integer.parseInt(stock),category);
 
             try {
                 if (productBus.addProduct(p)){
@@ -233,7 +233,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
             String price = txtGia.getText().trim();
             String calories = txtCalories.getText().trim();
             String stock = txtSoLuong.getText().trim();
-            String supplierID = String.valueOf(cbMaNCC.getSelectedItem());
+//            String supplierID = String.valueOf(cbMaNCC.getSelectedItem());
 
             if(productID.equals("")){
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã sản phâm",
@@ -299,7 +299,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
             }
 
             try {
-                if (productBus.updateProduct(productID,name,Float.parseFloat(price),Float.parseFloat(calories),Integer.parseInt(stock),category,supplierID)){
+                if (productBus.updateProduct(productID,name,Float.parseFloat(price),Float.parseFloat(calories),Integer.parseInt(stock),category)){
                     JOptionPane.showMessageDialog(frame, "Cập nhật sản phẩm thành công",
                             "Congratulations!!!", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -431,7 +431,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
             String value4 = tableSP.getValueAt(row,3).toString();
             String value5 = tableSP.getValueAt(row,4).toString();
             String value6 = tableSP.getValueAt(row,5).toString();
-            String value7 = tableSP.getValueAt(row,6).toString();
+//            String value7 = tableSP.getValueAt(row,6).toString();
 
 
             txtMa.setText(value1);
@@ -440,7 +440,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
             txtCalories.setText(value4);
             txtSoLuong.setText(value5);
             txtLoai.setText(value6);
-            cbMaNCC.setSelectedItem(value7);
+//            cbMaNCC.setSelectedItem(value7);
         }
 
 
@@ -476,4 +476,12 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
     }
+
+
+
+
+
+
+
+
 }

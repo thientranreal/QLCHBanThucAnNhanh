@@ -27,7 +27,7 @@ public class product_BUS {
 
     public void renderDataTable(JTable table, String[] columns,ArrayList<product_DTO> listProduct ){
         DefaultTableModel columnModel = new DefaultTableModel(null, columns);
-        Object[] row = new Object[7];
+        Object[] row = new Object[6];
         int i=0;
         try{
             for(product_DTO item : listProduct ){
@@ -38,7 +38,7 @@ public class product_BUS {
                 row[i++] = item.getCalories();
                 row[i++] = item.getStocks();
                 row[i++] = item.getCategory();
-                row[i++] = item.getSupplierID();
+//                row[i++] = item.getSupplierID();
                 columnModel.addRow(row);
             }
         }catch (NullPointerException ex){
@@ -69,8 +69,8 @@ public class product_BUS {
         return productDao.getAColumn(columnName,table);
     }
 
-    public boolean updateProduct(String productID, String name, float price, float calories, int stock, String category, String supplierID){
-        return productDao.updateProduct(productID,name,price, calories,stock,category,supplierID);
+    public boolean updateProduct(String productID, String name, float price, float calories, int stock, String category){
+        return productDao.updateProduct(productID,name,price, calories,stock,category);
     }
 
     public String toUpperCaseFirstChar(String str){

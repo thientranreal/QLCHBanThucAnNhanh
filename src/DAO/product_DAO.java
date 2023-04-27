@@ -13,7 +13,7 @@ public class product_DAO {
         ArrayList<product_DTO> arr = new ArrayList<product_DTO>();
         if (JDBC.openConnection()) {
             try {
-                String sql = "Select p.*,MaNCC=s.SupplierID from Product p join Supplier s on p.SupplierID = s.SupplierID";
+                String sql = "SELECT * from Product where status=1";
                 Statement stml = JDBC.getCon().createStatement();
                 ResultSet rs = stml.executeQuery(sql);
                 while (rs.next()) {
@@ -24,7 +24,6 @@ public class product_DAO {
                     product.setStocks(rs.getInt("Stock"));
                     product.setCalories(rs.getFloat("Calories"));
                     product.setCategory(rs.getNString("Category"));
-                    product.setSupplierID(rs.getString("MaNCC"));
 //                    product.setSupplierName(rs.getNString("TenNCC"));
                     arr.add(product);
                 }
@@ -42,7 +41,7 @@ public class product_DAO {
         boolean flag = false;
         if (JDBC.openConnection()) {
             try {
-                String sql = "INSERT INTO Product values (?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO Product values (?,?,?,?,?,?,1)";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 stmt.setString(1, product.getProductID());
                 stmt.setString(2, product.getProductName());
@@ -50,7 +49,7 @@ public class product_DAO {
                 stmt.setFloat(4, product.getCalories());
                 stmt.setInt(5, product.getStocks());
                 stmt.setString(6, product.getCategory());
-                stmt.setString(7, product.getSupplierID());
+
                 if (stmt.executeUpdate() >= 1) {
                     flag = true;
                 }
@@ -148,7 +147,6 @@ public class product_DAO {
                     product.setStocks(rs.getInt("Stock"));
                     product.setCalories(rs.getFloat("Calories"));
                     product.setCategory(rs.getNString("Category"));
-                    product.setSupplierID(rs.getString("SupplierID"));
                     arr.add(product);
                 }
                 stmt.close();
@@ -161,11 +159,34 @@ public class product_DAO {
         return arr;
     }
 
+//    public boolean deleteProduct(String id){
+//        boolean flag = false;
+//        if (JDBC.openConnection()){
+//            try {
+//                String sql = "DELETE FROM Product WHERE ProductID = ?";
+//                PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
+//                stmt.setString(1, id);
+//                if(stmt.executeUpdate() >= 1){
+//                    flag= true;
+//                }
+//                stmt.close();
+//
+//            }catch (SQLException ex){
+//                System.out.println("Error when trying to get rid of product from database! ");
+//            }finally {
+//                JDBC.closeConnection();
+//            }
+//        }
+//        return flag;
+//    }
+
+
+
     public boolean deleteProduct(String id){
         boolean flag = false;
         if (JDBC.openConnection()){
             try {
-                String sql = "DELETE FROM Product WHERE ProductID = ?";
+                String sql = "UPDATE Product SET Status=0 WHERE ProductID = ?";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 stmt.setString(1, id);
                 if(stmt.executeUpdate() >= 1){
@@ -182,19 +203,30 @@ public class product_DAO {
         return flag;
     }
 
-    public boolean updateProduct(String productID, String name, float price, float calories, int stock, String category, String supplierID){
+
+
+
+
+
+
+
+
+
+
+
+    public boolean updateProduct(String productID, String name, float price, float calories, int stock, String category){
         boolean flag = false;
         if(JDBC.openConnection()){
             try{
-                String sql = "UPDATE Product SET  Name= ?, Price= ?, Calories= ?, Stock= ?, Category= ?, SupplierID= ? " + " WHERE ProductID = ?";
+                String sql = "UPDATE Product SET  Name= ?, Price= ?, Calories= ?, Stock= ?, Category= ? " + " WHERE ProductID = ? and Status=1";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 stmt.setString(1,name);
                 stmt.setFloat(2,price);
                 stmt.setFloat(3,calories);
                 stmt.setInt(4,stock);
                 stmt.setString(5,category);
-                stmt.setString(6,supplierID);
-                stmt.setString(7,productID);
+//                stmt.setString(6,supplierID);
+                stmt.setString(6,productID);
                 if(stmt.executeUpdate() >= 1){
                     flag= true;
                 }
