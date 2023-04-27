@@ -62,11 +62,13 @@ public class Dashboard_GUI {
         product_GUI productGui = new product_GUI(frame);
         QuanLiTaiKhoan_GUI quanLiTaiKhoanGui = new QuanLiTaiKhoan_GUI(frame);
         HoaDon_GUI hoaDonGui= new HoaDon_GUI(frame);
+        Employee_GUI employeeGui = new Employee_GUI(frame);
         ThongKe_GUI thongKeGui = new ThongKe_GUI(frame);
         product_BUS productBus = new product_BUS();
         customerGUI customerGUI = new customerGUI(frame);
 
-        JPanel listGui[] = {productGui.getPnProduct(),hoaDonGui.getHoaDon_panel(),customerGUI.getPNCustomer(),quanLiTaiKhoanGui.QLTK(),thongKeGui.getThongKe_pnl()};
+
+        JPanel listGui[] = {productGui.getPnProduct(),hoaDonGui.getHoaDon_panel(),employeeGui.getPNEmp(),customerGUI.getPNCustomer(),quanLiTaiKhoanGui.QLTK(),thongKeGui.getThongKe_pnl()};
 
 
         for(int i=0; i<listGui.length; i++){
@@ -154,6 +156,7 @@ public class Dashboard_GUI {
                 pnCus.setBackground(DefaultColor);
                 pnAcc.setBackground(DefaultColor);
                 pnState.setBackground(DefaultColor);
+                cardLayout.show(pnShow,"pn3");
             }
         });
 
@@ -169,7 +172,7 @@ public class Dashboard_GUI {
                 pnAcc.setBackground(DefaultColor);
                 pnState.setBackground(DefaultColor);
                 //show pn
-                cardLayout.show(pnShow,"pn3");
+                cardLayout.show(pnShow,"pn4");
 
             }
         });
@@ -188,7 +191,7 @@ public class Dashboard_GUI {
                 pnState.setBackground(DefaultColor);
 
                 //show pn
-                cardLayout.show(pnShow,"pn4");
+                cardLayout.show(pnShow,"pn5");
             }
         });
 
@@ -207,7 +210,7 @@ public class Dashboard_GUI {
 
 
                 //show pn
-                cardLayout.show(pnShow,"pn5");
+                cardLayout.show(pnShow,"pn6");
             }
 
         });

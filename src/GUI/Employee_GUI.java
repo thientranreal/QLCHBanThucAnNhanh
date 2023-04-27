@@ -39,8 +39,8 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
     ArrayList<Employee_DTO> listEmployee = employeeBus.getAllEmployee();
 
 
-    public Employee_GUI(){
-        frame = new JFrame();
+    public Employee_GUI(JFrame frame){
+//        frame = new JFrame();
 
 
         //        Xử lý panel Thông tin chung
@@ -94,11 +94,16 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
 
 
 
-        frame.add(container);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+//        frame.add(container);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setLocationRelativeTo(null);
+//        frame.setVisible(true);
+    }
+
+
+    public JPanel getPNEmp(){
+        return container;
     }
 
 
@@ -478,9 +483,9 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
     }
 
 
-    public static void main(String[] args) {
-        new Employee_GUI();
-    }
+//    public static void main(String[] args) {
+//        new Employee_GUI();
+//    }
 
 
     @Override
