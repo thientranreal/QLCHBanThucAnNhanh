@@ -23,6 +23,7 @@ public class ThongKe_DAO {
                 result.add(rs.getString("ProductID") + ":" + rs.getNString("Name"));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }
@@ -56,6 +57,7 @@ public class ThongKe_DAO {
                         rs.getFloat("Total")));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }
@@ -91,6 +93,7 @@ public class ThongKe_DAO {
                         rs.getFloat("Total")));
             }
         } catch (SQLException e) {
+            JDBC.closeConnection();
             System.out.println("Không lấy được dữ liệu");
             return null;
         }

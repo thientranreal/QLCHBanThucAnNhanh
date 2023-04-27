@@ -582,4 +582,16 @@ public class HoaDon_GUI {
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
+
+//    Render customer list
+    public void renderCusResultList() {
+        customers =  hdBus.getAllCus();
+        loadCusResultList(sCus_result, customers);
+    }
+
+//    Render employee list
+    public void renderEmResultList() {
+        employees = hdBus.getAllEm();
+        loadEmResultList(sEm_result, employees);
+    }
 }
