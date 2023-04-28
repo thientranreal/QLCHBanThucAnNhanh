@@ -75,10 +75,59 @@ public class HoaDon_GUI {
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public HoaDon_GUI(JFrame frame) {
+    public HoaDon_GUI(JFrame frame, String username, String Access) {
 //        JFrame frame = new JFrame("Quản lý hóa đơn");
 //        frame.add(HoaDon_panel);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        if (Access.equals("Admin")) {
+            employees = hdBus.getAllEm();
+            loadEmResultList(sEm_result, employees);
+
+//        Mouse press event to show to employee name, id text field
+            sEm_result.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    super.mousePressed(e);
+                    if (sEm_result.getSelectedIndex() < 0) {
+                        return;
+                    }
+
+                    String[] employee = sEm_result.getSelectedValue().toString().split(":");
+                    String id = employee[0];
+                    String name = employee[1];
+                    emID_txt.setText(id);
+                    emName_txt.setText(name);
+                }
+            });
+//        End Mouse press event to show to employee name, id text field
+
+//        Input listener for search employee text field
+            sEm_txt.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    super.keyReleased(e);
+                    String searchStr = sEm_txt.getText();
+//                Empty list for search data
+                    employeesTemp = new ArrayList<>();
+                    for (String item : employees) {
+                        if (item.contains(searchStr)) {
+                            employeesTemp.add(item);
+                        }
+                    }
+
+//                Show data to list
+                    loadEmResultList(sEm_result, employeesTemp);
+                }
+            });
+//      End Input listener for search employee text field
+        }
+        else {
+            searchEm_panel.setVisible(false);
+            String[] emInfo = hdBus.getEmpByUserName(username).split(":");
+            emID_txt.setText(emInfo[0]);
+            emName_txt.setText(emInfo[1]);
+        }
 
         HoaDon_panel.setBorder(new EmptyBorder(5, 10, 5, 10));
         show_info.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
@@ -101,9 +150,7 @@ public class HoaDon_GUI {
 //        Load data to hoaDonList
         loadHoaDonList();
 //        Load employees and customer
-        employees = hdBus.getAllEm();
         customers = hdBus.getAllCus();
-        loadEmResultList(sEm_result, employees);
         loadCusResultList(sCus_result, customers);
 //        Show hoaDonList to JTable
         String[] columns = {"Mã hóa đơn", "Mã nhân viên", "Tên nhân viên",
@@ -346,26 +393,6 @@ public class HoaDon_GUI {
         });
 //        End Input listener for search customer text field
 
-//        Input listener for search employee text field
-        sEm_txt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
-                String searchStr = sEm_txt.getText();
-//                Empty list for search data
-                employeesTemp = new ArrayList<>();
-                for (String item : employees) {
-                    if (item.contains(searchStr)) {
-                        employeesTemp.add(item);
-                    }
-                }
-
-//                Show data to list
-                loadEmResultList(sEm_result, employeesTemp);
-            }
-        });
-//      End Input listener for search employee text field
-
 //        Mouse press event to show to customer name, id text field
         sCus_result.addMouseListener(new MouseAdapter() {
             @Override
@@ -383,24 +410,6 @@ public class HoaDon_GUI {
             }
         });
 //        End Mouse press event to show to customer name, id text field
-
-//        Mouse press event to show to employee name, id text field
-        sEm_result.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                if (sEm_result.getSelectedIndex() < 0) {
-                    return;
-                }
-
-                String[] employee = sEm_result.getSelectedValue().toString().split(":");
-                String id = employee[0];
-                String name = employee[1];
-                emID_txt.setText(id);
-                emName_txt.setText(name);
-            }
-        });
-//        End Mouse press event to show to employee name, id text field
 
 //        add event listener for remove button
         rm_btn.addActionListener(new ActionListener() {

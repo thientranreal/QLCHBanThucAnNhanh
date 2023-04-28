@@ -177,4 +177,27 @@ public class HD_DAO {
         return updatedRows;
     }
 
+    public String getEmpByUserName(String username) {
+        JDBC.openConnection();
+        String result = "";
+        try {
+            Connection con = JDBC.getCon();
+            String sql = "SELECT EmployeeID, Name FROM Employee, Account " +
+                    "WHERE Account.AccountID = Employee.AccountID AND Username = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setString(1, username);
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                result = rs.getString("EmployeeID") + ":" + rs.getNString("Name");
+            }
+        } catch (SQLException ex) {
+            result = "N/a:N/a";
+        }
+
+        JDBC.closeConnection();
+        return result;
+    }
+
 }
