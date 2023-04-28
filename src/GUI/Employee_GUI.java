@@ -2,17 +2,13 @@ package GUI;
 
 import BUS.Employee_BUS;
 import DTO.Employee_DTO;
-import DTO.product_DTO;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.sql.Date;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Employee_GUI implements ActionListener, MouseListener {
+public class Employee_GUI implements ActionListener, MouseListener, KeyListener {
     private JPanel container;
     private JTextField txtMaNV;
     private JTextField txtName;
@@ -22,8 +18,7 @@ public class Employee_GUI implements ActionListener, MouseListener {
     private JTextField txtSex;
     private JTable tableEmp;
     private JComboBox cbSearch;
-    private JTextField textField7;
-    private JList list1;
+    private JList searchList;
     private JPanel pnThongTinChung;
     private JPanel pnTimKiem;
     private JButton btnAdd;
@@ -36,6 +31,7 @@ public class Employee_GUI implements ActionListener, MouseListener {
     private JPanel pnDate;
     private JPanel pnTable;
     private JPanel pnTitle;
+    private JTextField txtSearch;
     JFrame frame;
 
     public String[] columns = {"Mã nhân viên", "Tên nhân viên", "Địa chỉ", "Số điện thoại", "Ngày sinh","Giới tính", "Chức vụ","Mã tài khoản", "Tên tài khoản", "Mật khẩu" };
@@ -43,8 +39,8 @@ public class Employee_GUI implements ActionListener, MouseListener {
     ArrayList<Employee_DTO> listEmployee = employeeBus.getAllEmployee();
 
 
-    public Employee_GUI(){
-        frame = new JFrame();
+    public Employee_GUI(JFrame frame){
+//        frame = new JFrame();
 
 
         //        Xử lý panel Thông tin chung
@@ -90,15 +86,24 @@ public class Employee_GUI implements ActionListener, MouseListener {
 
         btnAdd.addActionListener(this);
         btnDel.addActionListener(this);
+        btnUpdate.addActionListener(this);
         tableEmp.addMouseListener(this);
+        txtSearch.addKeyListener(this);
+        searchList.addMouseListener(this);
 
 
 
-        frame.add(container);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+
+//        frame.add(container);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setLocationRelativeTo(null);
+//        frame.setVisible(true);
+    }
+
+
+    public JPanel getPNEmp(){
+        return container;
     }
 
 
@@ -117,39 +122,39 @@ public class Employee_GUI implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnAdd){
+        if (e.getSource() == btnAdd) {
             String employeeID = txtMaNV.getText().trim().toUpperCase();
-            String accountID = "";
+//            String accountID = "";
             String name = txtName.getText().trim();
-            String address= txtAddress.getText().trim().toLowerCase();
+            String address = txtAddress.getText().trim().toLowerCase();
             String phone = txtPhone.getText().trim();
-            String dateOfBirth= "";
-            String day= String.valueOf(cbDay.getSelectedItem());
-            String month= String.valueOf(cbMonth.getSelectedItem());
-            String year= String.valueOf(cbYear.getSelectedItem());
+            String dateOfBirth = "";
+            String day = String.valueOf(cbDay.getSelectedItem());
+            String month = String.valueOf(cbMonth.getSelectedItem());
+            String year = String.valueOf(cbYear.getSelectedItem());
             String Sex = txtSex.getText().trim().toLowerCase();
             String Role = String.valueOf(cbRole.getSelectedItem());
             String userName = "";
             String Password = "";
-            if(employeeID.equals("")){
+            if (employeeID.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã nhân viên",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 txtMaNV.grabFocus();
                 return;
-            }else{
-                if(!employeeID.startsWith("NV")){
+            } else {
+                if (!employeeID.startsWith("NV")) {
                     JOptionPane.showMessageDialog(frame, "Mã nhân viên không hợp lệ, vui lòng nhập lại",
                             "Error", JOptionPane.ERROR_MESSAGE);
                     txtMaNV.grabFocus();
                     return;
-                }else {
+                } else {
                     if (employeeBus.hasEmployeeID(employeeID)) {
                         JOptionPane.showMessageDialog(frame, "Mã nhân viên đã tồn tại, vui lòng nhập lại",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                         txtMaNV.grabFocus();
                         return;
-                    }else{
-                        if(employeeID.length() != 4){
+                    } else {
+                        if (employeeID.length() != 4) {
                             JOptionPane.showMessageDialog(frame, "Mã nhân viên phải đủ 4 kí tự, vui lòng nhập lại",
                                     "Error", JOptionPane.ERROR_MESSAGE);
                             txtMaNV.grabFocus();
@@ -159,21 +164,21 @@ public class Employee_GUI implements ActionListener, MouseListener {
                 }
             }
 
-            if(name.equals("")){
+            if (name.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống tên nhân viên",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 txtName.grabFocus();
                 return;
             }
 
-            if(address.equals("")){
+            if (address.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống địa chỉ",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 txtAddress.grabFocus();
                 return;
             }
 
-            if (phone.equals("")){
+            if (phone.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống số điện thoại",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 txtPhone.grabFocus();
@@ -196,13 +201,13 @@ public class Employee_GUI implements ActionListener, MouseListener {
 //                return;
 //            }
 
-            if (Sex.equals("")){
+            if (Sex.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống giới tính",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 txtSex.grabFocus();
                 return;
-            }else{
-                if(!(Sex.equals("nam")) && !(Sex.equals("nữ"))){
+            } else {
+                if (!(Sex.equals("nam")) && !(Sex.equals("nữ"))) {
                     JOptionPane.showMessageDialog(frame, "Giới tính không hợp lệ",
                             "Error", JOptionPane.ERROR_MESSAGE);
                     txtSex.grabFocus();
@@ -210,52 +215,159 @@ public class Employee_GUI implements ActionListener, MouseListener {
                 }
             }
 
-            if(Role.equals("")){
+            if (Role.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống chức vụ",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            Date date = Date.valueOf(String.format("%s-%s-%s",year,month,day));
+            Date date = Date.valueOf(String.format("%s-%s-%s", year, month, day));
 
 
-
-            Employee_DTO emp = new Employee_DTO(employeeID,accountID,name,address,phone,date,Sex,Role,userName,Password);
+            Employee_DTO emp = new Employee_DTO(employeeID, null, name, address, phone, date, Sex, Role, userName, Password);
             System.out.println(emp.toString());
 
             try {
-                if (employeeBus.addEmployee(emp)){
+                if (employeeBus.addEmployee(emp)) {
                     JOptionPane.showMessageDialog(frame, "Thêm nhân viên thành công",
                             "Congratulations!!!", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Error when trying add product!");
             }
             reset();
-            ArrayList<Employee_DTO> listEmployee= employeeBus.getAllEmployee();
-            employeeBus.renderDataTable(tableEmp,columns,listEmployee);
-        }else {
-            if(e.getSource() == btnDel){
-                String day= String.valueOf(cbDay.getSelectedItem());
-                String month= String.valueOf(cbMonth.getSelectedItem());
-                String year= String.valueOf(cbYear.getSelectedItem());
-//                String daymonthyear = String.format("%s-%s-%s",day,month,year);private final SimpleDateFormat sqldateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            ArrayList<Employee_DTO> listEmployee = employeeBus.getAllEmployee();
+            employeeBus.renderDataTable(tableEmp, columns, listEmployee);
+        } else {
+            if (e.getSource() == btnDel) {
+                String EmpID = txtMaNV.getText().trim().toUpperCase();
+                if (EmpID.equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã nhân viên",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    txtMaNV.grabFocus();
+                    return;
+                } else {
+                    if (!EmpID.startsWith("NV")) {
+                        JOptionPane.showMessageDialog(frame, "Mã nhân viên không hợp lệ, vui lòng nhập lại",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtMaNV.grabFocus();
+                        return;
+                    }
+                    employeeBus.deleteEmp(EmpID);
+                    JOptionPane.showMessageDialog(frame, "Xóa nhân viên thành công",
+                            "Congratulations!!!", JOptionPane.INFORMATION_MESSAGE);
+                    reset();
+                    ArrayList<Employee_DTO> listEmp = employeeBus.getAllEmployee();
+                    employeeBus.renderDataTable(tableEmp, columns, listEmp);
+                }
+            } else {
+                if (e.getSource() == btnUpdate) {
+                    String employeeID = txtMaNV.getText().trim().toUpperCase();
+                    String name = txtName.getText().trim();
+                    String address = txtAddress.getText().trim().toLowerCase();
+                    String phone = txtPhone.getText().trim();
+                    String day = String.valueOf(cbDay.getSelectedItem());
+                    String month = String.valueOf(cbMonth.getSelectedItem());
+                    String year = String.valueOf(cbYear.getSelectedItem());
+                    String Sex = txtSex.getText().trim().toLowerCase();
+                    String Role = String.valueOf(cbRole.getSelectedItem());
 
-//                Date date = Date.valueOf("31-2-2024");
-                System.out.println(year +month+day);
-                Date date = Date.valueOf(String.format("%s-%s-%s",year,month,day));
-                System.out.println(date);
+                    if (employeeID.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã nhân viên",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtMaNV.grabFocus();
+                        return;
+                    } else {
+                        if (!employeeID.startsWith("NV")) {
+                            JOptionPane.showMessageDialog(frame, "Mã nhân viên không hợp lệ, vui lòng nhập lại",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            txtMaNV.grabFocus();
+                            return;
+                        }
+                    }
+
+                    if (name.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống tên nhân viên",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtName.grabFocus();
+                        return;
+                    }
+
+                    if (address.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống địa chỉ",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtAddress.grabFocus();
+                        return;
+                    }
+
+                    if (phone.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống số điện thoại",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtPhone.grabFocus();
+                        return;
+                    }
+
+//            if(day.equals("")){
+//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống ngày sinh",
+//                        "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//            if(month.equals("")){
+//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống tháng sinh",
+//                        "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//            if(year.equals("")){
+//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống năm sinh",
+//                        "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+
+                    if (Sex.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống giới tính",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtSex.grabFocus();
+                        return;
+                    } else {
+                        if (!(Sex.equals("nam")) && !(Sex.equals("nữ"))) {
+                            JOptionPane.showMessageDialog(frame, "Giới tính không hợp lệ",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            txtSex.grabFocus();
+                            return;
+                        }
+                    }
+
+                    if (Role.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống chức vụ",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+
+                    Date date = Date.valueOf(String.format("%s-%s-%s", year, month, day));
+
+                    try {
+                        if (employeeBus.updateEmp(employeeID, name, address, phone, date, Sex, Role)) {
+                            JOptionPane.showMessageDialog(frame, "Cập nhật nhân viên thành công",
+                                    "Congratulations!!!", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("Error when trying update employee!");
+                    }
+                    reset();
+                    ArrayList<Employee_DTO> listEmp = employeeBus.getAllEmployee();
+                    employeeBus.renderDataTable(tableEmp, columns, listEmp);
+
+
+                }
             }
+
+
         }
+
+
     }
 
-
-//
-//    public static void main(String[] args) {
-//
-//        new Employee_GUI();
-//
-//    }
 
 
     @Override
@@ -350,6 +462,14 @@ public class Employee_GUI implements ActionListener, MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
 
+        if(e.getSource() == searchList){
+            String cbSearchValue =cbSearch.getSelectedItem().toString();
+            String searchListValue = searchList.getSelectedValue().toString();
+            ArrayList<Employee_DTO> listEmp= new ArrayList<Employee_DTO>();
+            listEmp=employeeBus.getEmpFromCondition(searchListValue,cbSearchValue);
+            employeeBus.renderDataTable(tableEmp,columns,listEmp);
+        }
+
     }
 
     @Override
@@ -361,4 +481,55 @@ public class Employee_GUI implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+
+//    public static void main(String[] args) {
+//        new Employee_GUI();
+//    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        String value = txtSearch.getText().trim().toLowerCase();
+        DefaultListModel<String> lModel = new DefaultListModel<>();
+        ArrayList<String> listSearch = new ArrayList<>();
+        if(cbSearch.getSelectedItem().equals("Mã nhân viên")){
+            listSearch = employeeBus.getAColumn("EmployeeID","Employee");
+            for(int i=0; i<listSearch.size(); i++){
+                if(value.equals("")){
+                    employeeBus.renderDataTable(tableEmp,columns,listEmployee);
+                    break;
+                }
+                if(listSearch.get(i).toLowerCase().contains(value)){
+                    lModel.addElement(listSearch.get(i));
+                }
+            }
+        }else if(cbSearch.getSelectedItem().equals("Tên nhân viên")){
+            listSearch = employeeBus.getAColumn("Name","Employee");
+            for(int i=0; i<listSearch.size(); i++){
+                if(value.equals("")){
+                    employeeBus.renderDataTable(tableEmp,columns,listEmployee);
+                    break;
+                }
+                if(listSearch.get(i).toLowerCase().contains(value)){
+                    lModel.addElement(listSearch.get(i));
+                }
+            }
+        }
+        searchList.setModel(lModel);
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }
+
+
+

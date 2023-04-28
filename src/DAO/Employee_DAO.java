@@ -15,7 +15,8 @@ public class Employee_DAO {
         ArrayList<Employee_DTO> arr = new ArrayList<Employee_DTO>();
         if (JDBC.openConnection()) {
             try {
-                String sql = "Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID";
+                String sql = "Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID where status=1";
+
                 Statement stml = JDBC.getCon().createStatement();
                 ResultSet rs = stml.executeQuery(sql);
                 while (rs.next()) {
@@ -47,7 +48,7 @@ public class Employee_DAO {
         boolean flag = false;
         if (JDBC.openConnection()) {
             try {
-                String sql = "INSERT INTO Employee values (?,?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO Employee values (?,?,?,?,?,?,?,?,1)";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 stmt.setString(1, emp.getEmployeeID());
                 stmt.setString(2, emp.getAccountID());
@@ -97,6 +98,110 @@ public class Employee_DAO {
     }
 
 
+
+    public boolean deleteEmp(String id){
+        boolean flag = false;
+        if (JDBC.openConnection()){
+            try {
+                String sql = "UPDATE Employee SET Status=0 WHERE EmployeeID = ?";
+                PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
+                stmt.setString(1, id);
+                if(stmt.executeUpdate() >= 1){
+                    flag= true;
+                }
+                stmt.close();
+
+            }catch (SQLException ex){
+                System.out.println("Error when trying to delete Employee! ");
+            }finally {
+                JDBC.closeConnection();
+            }
+        }
+        return flag;
+    }
+
+    public boolean updateEmp(String employeeID,String name,String address,String phone,Date date,String Sex,String Role){
+        boolean flag = false;
+        if(JDBC.openConnection()){
+            try{
+                String sql = "UPDATE Employee SET  Name= ?,Address = ?, Phone = ?, DateOfBirth = ?, Sex = ?, Role = ? " + " WHERE EmployeeID = ? and Status=1";
+                PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
+
+//                stmt.setString(2,accountID);
+                stmt.setString(1,name);
+                stmt.setString(2,address);
+                stmt.setString(3,phone);
+//                stmt.setString(6,supplierID);
+                stmt.setDate(4,date);
+                stmt.setString(5,Sex);
+                stmt.setString(6,Role);
+                stmt.setString(7,employeeID);
+                if(stmt.executeUpdate() >= 1){
+                    flag= true;
+                }
+                stmt.close();
+            }catch (SQLException ex){
+                System.out.println("Error when trying to update data from database");
+            }finally {
+                JDBC.closeConnection();
+            }
+        }
+        return flag;
+    }
+
+
+    public ArrayList<String> getAColumn(String columnName,String table){
+        ArrayList<String> list = new ArrayList<String>();
+        if (JDBC.openConnection()){
+            try {
+                String sql = "SELECT" + " " +columnName + " " + "FROM"+ " " + table;
+                PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()){
+                    list.add(rs.getString(columnName));
+                }
+                stmt.close();
+            }catch (SQLException ex){
+                System.out.println("Error when trying to get ArrayList Column");
+            }finally {
+                JDBC.closeConnection();
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<Employee_DTO>getEmpFromCondition(String condition,String columnName){
+        String sql=null;
+        ArrayList<Employee_DTO> arr = new ArrayList<Employee_DTO>();
+        if(JDBC.openConnection()){
+            try{
+                Employee_DTO emp = new Employee_DTO();
+                if(columnName.equals("Mã nhân viên")){
+                    sql = "SELECT * FROM Employee WHERE EmployeeID = " + "N'"+condition+"'";
+                }else if(columnName.equals("Tên nhân viên")){
+                    sql= "SELECT * FROM Employee WHERE Name = "+ "N'"+condition+"'";
+                }
+                Statement stmt = JDBC.getCon().createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()){
+                    emp.setEmployeeID(rs.getString("EmployeeID"));
+                    emp.setName(rs.getString("Name"));
+                    emp.setAddress(rs.getNString("Address"));
+                    emp.setPhone(rs.getString("Phone"));
+                    emp.setDateOfBirth(rs.getDate("DateOfBirth"));
+                    emp.setSex(rs.getString("Sex"));
+                    emp.setRole(rs.getNString("Role"));
+                    arr.add(emp);
+                }
+                stmt.close();
+            }catch (SQLException ex){
+                System.out.println("Error when trying to get data from condition to database");
+            }finally {
+                JDBC.closeConnection();
+            }
+        }
+        return arr;
+    }
 
 
 

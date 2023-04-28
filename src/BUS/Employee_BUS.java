@@ -5,6 +5,7 @@ import DTO.product_DTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Employee_BUS {
@@ -66,4 +67,22 @@ public class Employee_BUS {
     public boolean addEmployee(Employee_DTO employee) {
         return emp.addEmployee(employee);
     }
+
+    public boolean deleteEmp(String id){
+        return emp.deleteEmp(id);
+    }
+
+    public boolean updateEmp(String employeeID, String name, String address, String phone, Date date, String Sex, String Role){
+        return emp.updateEmp(employeeID,name,address,phone,date,Sex,Role);
+    }
+
+    public ArrayList<String> getAColumn(String columnName,String table){
+        return emp.getAColumn(columnName,table);
+    }
+
+    public ArrayList<Employee_DTO> getEmpFromCondition(String condition,String columnName){
+        return emp.getEmpFromCondition(condition,columnName);
+    }
+
+
 }
