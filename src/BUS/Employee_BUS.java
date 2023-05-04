@@ -85,6 +85,10 @@ public class Employee_BUS {
         return emp.deleteEmp(id);
     }
 
+    public boolean checkAccEmpExist(String accountID){
+        return emp.checkAccEmpExist(accountID);
+    }
+
     public boolean updateEmp(String employeeID,String accountID, String name, String address, String phone, Date date, String Sex, String Role){
         return emp.updateEmp(employeeID,accountID,name,address,phone,date,Sex,Role);
     }

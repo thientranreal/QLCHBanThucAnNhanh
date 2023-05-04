@@ -15,22 +15,36 @@ public class Employee_DAO {
         ArrayList<Employee_DTO> arr = new ArrayList<Employee_DTO>();
         if (JDBC.openConnection()) {
             try {
-                String sql = "Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID where emp.Status=1";
+                String sql = "Select emp.*,UserName=acc.Username, Password=acc.Password, stAccount=acc.Status  from Employee emp left join Account acc on emp.AccountID = acc.AccountID where emp.Status=1";
 
                 Statement stml = JDBC.getCon().createStatement();
                 ResultSet rs = stml.executeQuery(sql);
                 while (rs.next()) {
                     Employee_DTO emp = new Employee_DTO();
-                    emp.setEmployeeID(rs.getString("EmployeeID"));
-                    emp.setAccountID(rs.getString("AccountID"));
-                    emp.setName(rs.getNString("Name"));
-                    emp.setAddress(rs.getNString("Address"));
-                    emp.setPhone(rs.getString("Phone"));
-                    emp.setDateOfBirth(rs.getDate("DateOfBirth"));
-                    emp.setSex(rs.getNString("Sex"));
-                    emp.setRole(rs.getString("Role"));
-                    emp.setUserName(rs.getString("UserName"));
-                    emp.setPassword(rs.getString("Password"));
+                    System.out.println(rs.getInt("stAccount"));
+                    if(rs.getInt("stAccount") == 0){
+                        emp.setEmployeeID(rs.getString("EmployeeID"));
+                        emp.setAccountID("");
+                        emp.setName(rs.getNString("Name"));
+                        emp.setAddress(rs.getNString("Address"));
+                        emp.setPhone(rs.getString("Phone"));
+                        emp.setDateOfBirth(rs.getDate("DateOfBirth"));
+                        emp.setSex(rs.getNString("Sex"));
+                        emp.setRole(rs.getString("Role"));
+                        emp.setUserName("");
+                        emp.setPassword("");
+                    }else{
+                        emp.setEmployeeID(rs.getString("EmployeeID"));
+                        emp.setAccountID(rs.getString("AccountID"));
+                        emp.setName(rs.getNString("Name"));
+                        emp.setAddress(rs.getNString("Address"));
+                        emp.setPhone(rs.getString("Phone"));
+                        emp.setDateOfBirth(rs.getDate("DateOfBirth"));
+                        emp.setSex(rs.getNString("Sex"));
+                        emp.setRole(rs.getString("Role"));
+                        emp.setUserName(rs.getString("UserName"));
+                        emp.setPassword(rs.getString("Password"));
+                    }
                     arr.add(emp);
                 }
                 stml.close();
@@ -114,6 +128,28 @@ public class Employee_DAO {
 
             }catch (SQLException ex){
                 System.out.println("Error when trying to delete Employee! ");
+            }finally {
+                JDBC.closeConnection();
+            }
+        }
+        return flag;
+    }
+
+    public boolean checkAccEmpExist(String accountID){
+        boolean flag = false;
+        if(JDBC.openConnection()){
+            try{
+                String sql = "Select * from Employee where AccountID = ?";
+                PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
+
+//                stmt.setString(2,accountID);
+                stmt.setString(1,accountID);
+                if(stmt.executeQuery().next()){
+                    flag= true;
+                }
+                stmt.close();
+            }catch (SQLException ex){
+                System.out.println("Error when trying check exist account employee");
             }finally {
                 JDBC.closeConnection();
             }

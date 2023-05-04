@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import BUS.product_BUS;
+import BUS.Employee_BUS;
 
 public class Dashboard_GUI {
 
@@ -64,6 +65,8 @@ public class Dashboard_GUI {
         Employee_GUI employeeGui = new Employee_GUI(frame);
         ThongKe_GUI thongKeGui = new ThongKe_GUI(frame);
         product_BUS productBus = new product_BUS();
+        Employee_BUS employeeBus = new Employee_BUS();
+
         customerGUI customerGUI = new customerGUI(frame);
 
 
@@ -158,6 +161,9 @@ public class Dashboard_GUI {
                 pnAcc.setBackground(DefaultColor);
                 pnState.setBackground(DefaultColor);
                 cardLayout.show(pnShow,"pn3");
+
+
+                employeeBus.renderDataTable(employeeGui.getTableEmp(),employeeGui.columns,employeeBus.getAllEmployee());
             }
         });
 

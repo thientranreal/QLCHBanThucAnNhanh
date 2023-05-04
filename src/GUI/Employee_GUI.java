@@ -102,7 +102,9 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
         return container;
     }
 
-
+    public JTable getTableEmp(){
+        return tableEmp;
+    }
 
     public void reset(){
         txtMaNV.setText("");
@@ -330,20 +332,29 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                         txtMaTK.grabFocus();
                         return;
                     } else {
-                        if (!accountID.startsWith("TK")) {
-                            JOptionPane.showMessageDialog(frame, "Mã tài khoản không hợp lệ, vui lòng nhập lại",
+                        if(employeeBus.checkAccEmpExist(accountID)){
+                            JOptionPane.showMessageDialog(frame, "Tài khoản đã có người sử dụng, vui lòng nhập lại",
                                     "Error", JOptionPane.ERROR_MESSAGE);
                             txtMaTK.grabFocus();
                             return;
-                        } else {
-                            if (accountID.length() != 4) {
-                                JOptionPane.showMessageDialog(frame, "Mã tài khoản phải đủ 4 kí tự, vui lòng nhập lại",
+                        }else{
+                            if (!accountID.startsWith("TK")) {
+                                JOptionPane.showMessageDialog(frame, "Mã tài khoản không hợp lệ, vui lòng nhập lại",
                                         "Error", JOptionPane.ERROR_MESSAGE);
                                 txtMaTK.grabFocus();
                                 return;
+                            } else {
+                                if (accountID.length() != 4) {
+                                    JOptionPane.showMessageDialog(frame, "Mã tài khoản phải đủ 4 kí tự, vui lòng nhập lại",
+                                            "Error", JOptionPane.ERROR_MESSAGE);
+                                    txtMaTK.grabFocus();
+                                    return;
+                                }
+
                             }
 
                         }
+
                     }
 
 
