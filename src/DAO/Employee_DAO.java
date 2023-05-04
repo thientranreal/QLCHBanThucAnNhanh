@@ -15,7 +15,7 @@ public class Employee_DAO {
         ArrayList<Employee_DTO> arr = new ArrayList<Employee_DTO>();
         if (JDBC.openConnection()) {
             try {
-                String sql = "Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID where status=1";
+                String sql = "Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID where emp.Status=1";
 
                 Statement stml = JDBC.getCon().createStatement();
                 ResultSet rs = stml.executeQuery(sql);
@@ -36,6 +36,7 @@ public class Employee_DAO {
                 stml.close();
             } catch (SQLException ex) {
                 System.out.println("Error when get data employee from SQL Server");
+                System.out.println(ex);
             } finally {
                 JDBC.closeConnection();
             }
@@ -120,28 +121,29 @@ public class Employee_DAO {
         return flag;
     }
 
-    public boolean updateEmp(String employeeID,String name,String address,String phone,Date date,String Sex,String Role){
+    public boolean updateEmp(String employeeID,String accountID,String name,String address,String phone,Date date,String Sex,String Role){
         boolean flag = false;
         if(JDBC.openConnection()){
             try{
-                String sql = "UPDATE Employee SET  Name= ?,Address = ?, Phone = ?, DateOfBirth = ?, Sex = ?, Role = ? " + " WHERE EmployeeID = ? and Status=1";
+                String sql = "UPDATE Employee SET  AccountID= ?, Name= ?,Address = ?, Phone = ?, DateOfBirth = ?, Sex = ?, Role = ? " + " WHERE EmployeeID = ? and Status=1";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
 
 //                stmt.setString(2,accountID);
-                stmt.setString(1,name);
-                stmt.setString(2,address);
-                stmt.setString(3,phone);
+                stmt.setString(1,accountID);
+                stmt.setString(2,name);
+                stmt.setString(3,address);
+                stmt.setString(4,phone);
 //                stmt.setString(6,supplierID);
-                stmt.setDate(4,date);
-                stmt.setString(5,Sex);
-                stmt.setString(6,Role);
-                stmt.setString(7,employeeID);
+                stmt.setDate(5,date);
+                stmt.setString(6,Sex);
+                stmt.setString(7,Role);
+                stmt.setString(8,employeeID);
                 if(stmt.executeUpdate() >= 1){
                     flag= true;
                 }
                 stmt.close();
             }catch (SQLException ex){
-                System.out.println("Error when trying to update data from database");
+                System.out.println("Error when trying to update employee from database");
             }finally {
                 JDBC.closeConnection();
             }
@@ -154,7 +156,7 @@ public class Employee_DAO {
         ArrayList<String> list = new ArrayList<String>();
         if (JDBC.openConnection()){
             try {
-                String sql = "SELECT" + " " +columnName + " " + "FROM"+ " " + table;
+                String sql = "SELECT" + " " +columnName + " " + "FROM"+ " " + table +" WHERE Status=1";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()){
@@ -177,20 +179,26 @@ public class Employee_DAO {
             try{
                 Employee_DTO emp = new Employee_DTO();
                 if(columnName.equals("Mã nhân viên")){
-                    sql = "SELECT * FROM Employee WHERE EmployeeID = " + "N'"+condition+"'";
+//                    sql = "SELECT * FROM Employee WHERE EmployeeID = " + "N'"+condition+"'";
+                    sql ="Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID where EmployeeID = " + "N'"+condition+"'" + " and emp.Status=1";
                 }else if(columnName.equals("Tên nhân viên")){
-                    sql= "SELECT * FROM Employee WHERE Name = "+ "N'"+condition+"'";
+//                    sql= "SELECT * FROM Employee WHERE Name = "+ "N'"+condition+"'";
+                    sql ="Select emp.*,UserName=acc.Username, Password=acc.Password from Employee emp left join Account acc on emp.AccountID = acc.AccountID where Name = " + "N'"+condition+"'" + " and emp.Status=1";
+
                 }
                 Statement stmt = JDBC.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()){
                     emp.setEmployeeID(rs.getString("EmployeeID"));
+                    emp.setAccountID(rs.getString("AccountID"));
                     emp.setName(rs.getString("Name"));
                     emp.setAddress(rs.getNString("Address"));
                     emp.setPhone(rs.getString("Phone"));
                     emp.setDateOfBirth(rs.getDate("DateOfBirth"));
                     emp.setSex(rs.getString("Sex"));
                     emp.setRole(rs.getNString("Role"));
+                    emp.setUserName(rs.getString("UserName"));
+                    emp.setPassword(rs.getString("Password"));
                     arr.add(emp);
                 }
                 stmt.close();

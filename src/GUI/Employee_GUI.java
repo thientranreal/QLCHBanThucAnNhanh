@@ -2,6 +2,7 @@ package GUI;
 
 import BUS.Employee_BUS;
 import DTO.Employee_DTO;
+import BUS.Account_BUS;
 
 import java.awt.event.*;
 import java.sql.Date;
@@ -32,16 +33,16 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
     private JPanel pnTable;
     private JPanel pnTitle;
     private JTextField txtSearch;
+    private JTextField txtMaTK;
     JFrame frame;
 
     public String[] columns = {"Mã nhân viên", "Tên nhân viên", "Địa chỉ", "Số điện thoại", "Ngày sinh","Giới tính", "Chức vụ","Mã tài khoản", "Tên tài khoản", "Mật khẩu" };
     Employee_BUS employeeBus = new Employee_BUS();
+    Account_BUS accountBus = new Account_BUS();
     ArrayList<Employee_DTO> listEmployee = employeeBus.getAllEmployee();
 
 
     public Employee_GUI(JFrame frame){
-//        frame = new JFrame();
-
 
         //        Xử lý panel Thông tin chung
         pnThongTinChung.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
@@ -52,7 +53,6 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
         DefaultComboBoxModel searchsList = new DefaultComboBoxModel();
         searchsList.addElement("Mã nhân viên");
         searchsList.addElement("Tên nhân viên");
-        searchsList.addElement("Chức vụ");
         cbSearch.setModel(searchsList);
 
 
@@ -77,6 +77,9 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
         }
         cbYear.setModel(cbModelYear);
 
+        txtMaTK.setEnabled(false);
+
+
 
 //        render dữ liệu ra table
         tableEmp.setDefaultEditor(Object.class, null);
@@ -92,13 +95,6 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
         searchList.addMouseListener(this);
 
 
-
-
-//        frame.add(container);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setLocationRelativeTo(null);
-//        frame.setVisible(true);
     }
 
 
@@ -185,22 +181,6 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                 return;
             }
 
-//            if(day.equals("")){
-//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống ngày sinh",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//            if(month.equals("")){
-//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống tháng sinh",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//            if(year.equals("")){
-//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống năm sinh",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-
             if (Sex.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Không được bỏ trống giới tính",
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -221,6 +201,20 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                 return;
             }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Date date = Date.valueOf(String.format("%s-%s-%s", year, month, day));
 
 
@@ -233,7 +227,7 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                             "Congratulations!!!", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (Exception ex) {
-                System.out.println("Error when trying add product!");
+                System.out.println("Error when trying add employee!");
             }
             reset();
             ArrayList<Employee_DTO> listEmployee = employeeBus.getAllEmployee();
@@ -271,6 +265,7 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                     String year = String.valueOf(cbYear.getSelectedItem());
                     String Sex = txtSex.getText().trim().toLowerCase();
                     String Role = String.valueOf(cbRole.getSelectedItem());
+                    String accountID = txtMaTK.getText().trim().toUpperCase();
 
                     if (employeeID.equals("")) {
                         JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã nhân viên",
@@ -307,21 +302,7 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                         return;
                     }
 
-//            if(day.equals("")){
-//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống ngày sinh",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//            if(month.equals("")){
-//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống tháng sinh",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//            if(year.equals("")){
-//                JOptionPane.showMessageDialog(frame, "Không được bỏ trống năm sinh",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
+
 
                     if (Sex.equals("")) {
                         JOptionPane.showMessageDialog(frame, "Không được bỏ trống giới tính",
@@ -343,11 +324,33 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
                         return;
                     }
 
+                    if (accountID.equals("")) {
+                        JOptionPane.showMessageDialog(frame, "Không được bỏ trống mã tài khoản",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        txtMaTK.grabFocus();
+                        return;
+                    } else {
+                        if (!accountID.startsWith("TK")) {
+                            JOptionPane.showMessageDialog(frame, "Mã tài khoản không hợp lệ, vui lòng nhập lại",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            txtMaTK.grabFocus();
+                            return;
+                        } else {
+                            if (accountID.length() != 4) {
+                                JOptionPane.showMessageDialog(frame, "Mã tài khoản phải đủ 4 kí tự, vui lòng nhập lại",
+                                        "Error", JOptionPane.ERROR_MESSAGE);
+                                txtMaTK.grabFocus();
+                                return;
+                            }
+
+                        }
+                    }
+
 
                     Date date = Date.valueOf(String.format("%s-%s-%s", year, month, day));
 
                     try {
-                        if (employeeBus.updateEmp(employeeID, name, address, phone, date, Sex, Role)) {
+                        if (employeeBus.updateEmp(employeeID,accountID, name, address, phone, date, Sex, Role)) {
                             JOptionPane.showMessageDialog(frame, "Cập nhật nhân viên thành công",
                                     "Congratulations!!!", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -382,10 +385,7 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
             String[] value5 = tableEmp.getValueAt(row,4).toString().split("-");
             String value6 = tableEmp.getValueAt(row,5).toString();
             String value7 = tableEmp.getValueAt(row,6).toString();
-//            if (jComboBox1.getItemAt(0).toString ().contains ("two"))
-//            {
-//                jComboBox1.setSelectedIndex(0);
-//            }
+
 
             txtMaNV.setText(value1);
             txtName.setText(value2);
@@ -446,6 +446,10 @@ public class Employee_GUI implements ActionListener, MouseListener, KeyListener 
 
 
             txtSex.setText(value6);
+
+            txtMaTK.setEnabled(true);
+//            txtMaTK.setText(value8);
+
 //            cbMaNCC.setSelectedItem(value7);
         }
 

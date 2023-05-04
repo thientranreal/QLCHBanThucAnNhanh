@@ -91,7 +91,7 @@ public class product_DAO {
         ArrayList<String> list = new ArrayList<String>();
         if (JDBC.openConnection()){
             try {
-                String sql = "SELECT" + " " +columnName + " " + "FROM"+ " " + table;
+                String sql = "SELECT" + " " +columnName + " " + "FROM"+ " " + table + " WHERE Status =1";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()){
@@ -134,9 +134,9 @@ public class product_DAO {
             try{
                 product_DTO product = new product_DTO();
                 if(columnName.equals("Mã sản phẩm")){
-                      sql = "SELECT * FROM Product WHERE ProductID = " + "N'"+condition+"'";
+                      sql = "SELECT * FROM Product WHERE ProductID = " + "N'"+condition+"'" + " and Status =1";
                 }else if(columnName.equals("Tên sản phẩm")){
-                        sql= "SELECT * FROM Product WHERE Name = "+ "N'"+condition+"'";
+                        sql= "SELECT * FROM Product WHERE Name = "+ "N'"+condition+"'" + " and Status =1";
                 }
                 Statement stmt = JDBC.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sql);

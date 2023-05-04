@@ -12,7 +12,7 @@ public class Account_DAO {
         ArrayList<Account_DTO> Accountlist = new ArrayList<>();
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account;";
+                String sqlQuery = "Select * from Account Where Status=1;";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 while (rs.next()) {
@@ -40,7 +40,7 @@ public class Account_DAO {
         Account_DTO account = new  Account_DTO();
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account Where AccountID='" + AccountID + "';";
+                String sqlQuery = "Select * from Account Where Status=1 and AccountID='" + AccountID + "';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 rs.next();
@@ -62,7 +62,7 @@ public class Account_DAO {
         Account_DTO account = new  Account_DTO();
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account Where Username='" + Username + "';";
+                String sqlQuery = "Select * from Account Where Status=1 and Username='" + Username + "';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 rs.next();
@@ -84,7 +84,7 @@ public class Account_DAO {
         boolean result = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Insert into Account values(?, ?, ?, ?);";
+                String sqlQuery = "Insert into Account values(?, ?, ?, ?, 1);";
                 PreparedStatement stmt = conn.getCon().prepareStatement(sqlQuery);
                 stmt.setString(1, account.getAccountID());
                 stmt.setString(2, account.getAccessID());
@@ -106,7 +106,7 @@ public class Account_DAO {
         boolean result = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account Where AccountID='" + AccountID + "';";
+                String sqlQuery = "Select * from Account Where Status=1 and AccountID='" + AccountID + "';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 result = rs.next();
@@ -123,7 +123,7 @@ public class Account_DAO {
         boolean result = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account Where Username='" + Username + "';";
+                String sqlQuery = "Select * from Account Where Status=1 and Username='" + Username + "';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 result = rs.next();
@@ -140,7 +140,7 @@ public class Account_DAO {
         boolean result = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account Where Username='" + Username + "' and AccountID!='" + AccountID + "';";
+                String sqlQuery = "Select * from Account Where Status=1 and Username='" + Username + "' and AccountID!='" + AccountID + "';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 result = rs.next();
@@ -157,7 +157,7 @@ public class Account_DAO {
         boolean result = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Update Account Set AccessID=?, Username=?, Password=? Where AccountID=?;";
+                String sqlQuery = "Update Account Set AccessID=?, Username=?, Password=? Where Status=1 and AccountID=?;";
                 PreparedStatement stmt = conn.getCon().prepareStatement(sqlQuery);
                 stmt.setString(1, account.getAccessID());
                 stmt.setString(2, account.getUsername());
@@ -180,7 +180,7 @@ public class Account_DAO {
         boolean result = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Delete from Account Where AccountID=?;";
+                String sqlQuery = "Update Account Set Status=0 Where AccountID=?;";
                 PreparedStatement stmt = conn.getCon().prepareStatement(sqlQuery);
                 stmt.setString(1, AccountID);
                 if (stmt.executeUpdate() >= 1) {
@@ -200,7 +200,7 @@ public class Account_DAO {
 
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * From Account Where AccountID Like '%" + AccountID + "%';";
+                String sqlQuery = "Select * From Account Where Status=1 and AccountID Like '%" + AccountID + "%';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 while (rs.next()) {
@@ -226,7 +226,7 @@ public class Account_DAO {
 
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * From Account Where Username Like '%" + Username + "%';";
+                String sqlQuery = "Select * From Account Where Status=1 and Username Like '%" + Username + "%';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 while (rs.next()) {
@@ -252,7 +252,7 @@ public class Account_DAO {
 
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account, Access Where Access.AccessID = Account.AccessID and Authority Like '%" + Authority + "%';";
+                String sqlQuery = "Select * from Account, Access Where Status=1 and Access.AccessID = Account.AccessID and Authority Like '%" + Authority + "%';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 while (rs.next()) {
@@ -278,7 +278,7 @@ public class Account_DAO {
         boolean found = false;
         if (conn.openConnection()) {
             try {
-                String sqlQuery = "Select * from Account Where Username='" + user + "' and Password='" + pass + "';";
+                String sqlQuery = "Select * from Account Where Status=1 and Username='" + user + "' and Password='" + pass + "';";
                 Statement stmt = conn.getCon().createStatement();
                 ResultSet rs = stmt.executeQuery(sqlQuery);
                 if (rs.next()) {
@@ -303,9 +303,10 @@ public class Account_DAO {
 
 //    public static void main(String[] args) {
 //        Account_DAO adao = new Account_DAO();
-//        ArrayList<Account_DTO> Accountlist = new  ArrayList<Account_DTO>();
-//        Account_DTO Account = adao.getAccountByUsername("admin");
-//        System.out.println(Account.getAccountID() + Account.getUsername() + Account.getPassword() + Account.getAccessID());
+//        ArrayList<Account_DTO> Accountlist = adao.getAllAccounts();
+//        for (Account_DTO account: Accountlist) {
+//            System.out.println(account.getAccountID());
+//        }
 //    }
 }
 

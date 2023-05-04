@@ -39,8 +39,8 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
 
 
     public product_GUI(JFrame frame) {
-//        frame = new JFrame("Quản lý sản phẩm");
-        container.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+//        container.setBorder(new EmptyBorder(5, 10, 5, 10));
 
 //        Xử lý panel Thông tin chung
         pnThongTinChung.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
@@ -54,12 +54,6 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
         searchsList.addElement("Loại sản phẩm");
         cbSearch.setModel(searchsList);
 
-//        Xử lý combobox mã ncc
-//        DefaultComboBoxModel cbSupplier = new DefaultComboBoxModel();
-//        for (String item : productBus.getAllSupplierID()){
-//            cbSupplier.addElement(item);
-//        }
-//        cbMaNCC.setModel(cbSupplier);
 
 
 //        render dữ liệu ra table
@@ -77,16 +71,6 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
         txtSearch.addKeyListener(this);
         searchList.addMouseListener(this);
         tableSP.addMouseListener(this);
-
-
-
-
-
-//        frame.add(container);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setLocationRelativeTo(null);
-//        frame.setVisible(true);
 
 
     }
@@ -319,33 +303,6 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-//        String value = txtSearch.getText();
-//        DefaultListModel<String> lModel = new DefaultListModel<>();
-//        ArrayList<String> listSearch = new ArrayList<>();
-//        if(cbSearch.getSelectedItem().equals("Mã sản phẩm")){
-//            listSearch = productBus.getAColumn("ProductID","Product");
-//            for(int i=0; i<listSearch.size(); i++){
-//                if(value.equals("")){
-//                    productBus.renderDataTable(tableSP,columns,listProduct);
-//                    break;
-//                }
-//                if(listSearch.get(i).contains(value.trim().toUpperCase())){
-//                    lModel.addElement(listSearch.get(i));
-//                }
-//            }
-//        }else if(cbSearch.getSelectedItem().equals("Tên sản phẩm")){
-//            listSearch = productBus.getAColumn("Name","Product");
-//            for(int i=0; i<listSearch.size(); i++){
-//                if(value.equals("")){
-//                    productBus.renderDataTable(tableSP,columns,listProduct);
-//                    break;
-//                }
-//                if(listSearch.get(i).contains(productBus.toUpperCaseFirstChar(value.trim().toLowerCase()))){
-//                    lModel.addElement(listSearch.get(i));
-//                }
-//            }
-//        }
-//        searchList.setModel(lModel);
 
     }
 
@@ -394,28 +351,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
 
 
 
-//        String value = txtSearch.getText();
-//
-//        ArrayList<String> listSearch = new ArrayList<>();
-//        if(cbSearch.getSelectedItem().equals("Mã sản phẩm")){
-//            listSearch = productBus.getAColumn("ProductID","Product");
-//        }else if(cbSearch.getSelectedItem().equals("Tên sản phẩm")){
-//            listSearch = productBus.getAColumn("Name","Product");
-//        }
-//
-//        DefaultListModel<String> lModel = new DefaultListModel<>();
-//        for(int i=0; i<listSearch.size(); i++){
-//            if(value.equals("")){
-//                productBus.renderDataTable(tableSP,columns,listProduct);
-//                break;
-//            }else if(listSearch.get(i).contains(value.trim().toUpperCase())){
-//                lModel.addElement(listSearch.get(i));
-//            }
-////            if(listSearch.get(i).contains(value.trim().toUpperCase())){
-////                lModel.addElement(listSearch.get(i));
-////            }
-//        }
-//        searchList.setModel(lModel);
+
 
     }
 
@@ -440,6 +376,7 @@ public class product_GUI implements ActionListener, KeyListener,MouseListener{
             txtCalories.setText(value4);
             txtSoLuong.setText(value5);
             txtLoai.setText(value6);
+
 //            cbMaNCC.setSelectedItem(value7);
         }
 

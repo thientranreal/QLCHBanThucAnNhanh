@@ -58,6 +58,19 @@ public class Employee_BUS {
     }
 
 
+    public String getNewAccountID(){
+        ArrayList<String> listAcc = emp.getAColumn("AccountID","Account");
+        int length = listAcc.size();
+        if(length < 10){
+            length +=  + 1;
+            return "TK0"+  String.valueOf(length);
+        }else{
+            length += 1;
+            return "TK" + String.valueOf(length);
+        }
+    }
+
+
     public boolean hasEmployeeID(String id){
         return emp.hasEmployeeID(id);
     }
@@ -72,8 +85,8 @@ public class Employee_BUS {
         return emp.deleteEmp(id);
     }
 
-    public boolean updateEmp(String employeeID, String name, String address, String phone, Date date, String Sex, String Role){
-        return emp.updateEmp(employeeID,name,address,phone,date,Sex,Role);
+    public boolean updateEmp(String employeeID,String accountID, String name, String address, String phone, Date date, String Sex, String Role){
+        return emp.updateEmp(employeeID,accountID,name,address,phone,date,Sex,Role);
     }
 
     public ArrayList<String> getAColumn(String columnName,String table){
