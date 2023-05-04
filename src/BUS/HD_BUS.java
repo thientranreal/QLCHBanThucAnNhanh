@@ -28,4 +28,6 @@ public class HD_BUS {
     public int deleteOrderAndAllProduct(String OrderId) {
         return hdDao.deleteOrderAndAllProduct(OrderId);
     }
+
+    public String getEmpByUserName(String username) { return hdDao.getEmpByUserName(username); }
 }

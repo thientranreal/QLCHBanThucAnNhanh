@@ -48,7 +48,6 @@ public class Dashboard_GUI {
         lbUser.setText(String.format("Xin chào, %s !!!",username));
         if(!Access.equals("Admin")){
             pnEmp.setVisible(false);
-            pnState.setVisible(false);
             pnAcc.setVisible(false);
         }
 
@@ -61,7 +60,7 @@ public class Dashboard_GUI {
 
         product_GUI productGui = new product_GUI(frame);
         QuanLiTaiKhoan_GUI quanLiTaiKhoanGui = new QuanLiTaiKhoan_GUI(frame);
-        HoaDon_GUI hoaDonGui= new HoaDon_GUI(frame);
+        HoaDon_GUI hoaDonGui= new HoaDon_GUI(frame, username, Access);
         Employee_GUI employeeGui = new Employee_GUI(frame);
         ThongKe_GUI thongKeGui = new ThongKe_GUI(frame);
         product_BUS productBus = new product_BUS();
@@ -139,7 +138,9 @@ public class Dashboard_GUI {
                 pnAcc.setBackground(DefaultColor);
                 pnState.setBackground(DefaultColor);
 
-                hoaDonGui.renderCusResultList();
+                if (Access.equals("Admin")) {
+                    hoaDonGui.renderEmResultList();
+                }
                 hoaDonGui.renderCusResultList();
                 //show pn
                 cardLayout.show(pnShow,"pn2");
