@@ -109,19 +109,19 @@ INSERT INTO Access (AccessID, Name, Authority) VALUES
 ('QL', N'Quản Lý', 'Admin'),
 ('NV', N'Nhân Viên', 'None');
 
-INSERT INTO Account (AccountID, AccessID, Username, Password) VALUES
-('TK01', 'QL', 'admin', 'admin123'),
-('TK02', 'QL', 'manager', 'manager123'),
-('TK03', 'NV', 'employee1', '123456'),
-('TK04', 'NV', 'employee2', 'qwerty'),
-('TK05', 'NV', 'employee3', 'password'),
-('TK06', 'NV', 'employee4', 'letmein'),
-('TK07', 'NV', 'employee5', 'changeme'),
-('TK08', 'NV', 'employee6', '123qwe'),
-('TK09', 'NV', 'employee7', 'abc123'),
-('TK10', 'NV', 'employee8', 'test123'),
-('TK11', 'NV', 'employee9', 'iloveyou'),
-('TK12', 'NV', 'employee10', 'welcome');
+INSERT INTO Account (AccountID, AccessID, Username, Password, Status) VALUES
+('TK01', 'QL', 'admin', 'admin123', 1),
+('TK02', 'QL', 'manager', 'manager123', 1),
+('TK03', 'NV', 'employee1', '123456', 1),
+('TK04', 'NV', 'employee2', 'qwerty', 1),
+('TK05', 'NV', 'employee3', 'password', 1),
+('TK06', 'NV', 'employee4', 'letmein', 1),
+('TK07', 'NV', 'employee5', 'changeme', 1),
+('TK08', 'NV', 'employee6', '123qwe', 1),
+('TK09', 'NV', 'employee7', 'abc123', 1),
+('TK10', 'NV', 'employee8', 'test123', 1),
+('TK11', 'NV', 'employee9', 'iloveyou', 1),
+('TK12', 'NV', 'employee10', 'welcome', 1);
 
 INSERT INTO Employee
 VALUES
