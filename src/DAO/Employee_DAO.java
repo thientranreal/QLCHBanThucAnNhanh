@@ -118,7 +118,7 @@ public class Employee_DAO {
         boolean flag = false;
         if (JDBC.openConnection()){
             try {
-                String sql = "UPDATE Employee SET Status=0 WHERE EmployeeID = ?";
+                String sql = "UPDATE Employee SET Status=0, AccountID = null  WHERE EmployeeID = ?";
                 PreparedStatement stmt = JDBC.getCon().prepareStatement(sql);
                 stmt.setString(1, id);
                 if(stmt.executeUpdate() >= 1){

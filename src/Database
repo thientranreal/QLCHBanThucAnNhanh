@@ -1,0 +1,201 @@
+CREATE DATABASE FastFood
+GO
+
+USE FastFood
+GO
+-- Create the Customer table
+CREATE TABLE Customer (
+    CustomerID VARCHAR(8) NOT NULL PRIMARY KEY,
+    Name NVARCHAR(100),
+    DateOfBirth DATE,
+    Address NVARCHAR(100),
+    Phone VARCHAR(20),
+    Sex NVARCHAR(5),
+    Point INT,
+    Status INT
+);
+GO
+
+CREATE TABLE Access (
+    AccessID VARCHAR(8) NOT NULL PRIMARY KEY,
+    Name VARCHAR(50),
+    Authority VARCHAR(10)
+);
+GO
+
+-- Create the Account table
+CREATE TABLE Account (
+    AccountID VARCHAR(8) NOT NULL PRIMARY KEY,
+    AccessID VARCHAR(8) NOT NULL,
+    Username VARCHAR(50),
+    Password VARCHAR(50),
+	Status INT,
+    FOREIGN KEY (AccessID) REFERENCES Access(AccessID)
+);
+GO
+
+-- Create the Employee table
+CREATE TABLE Employee (
+    EmployeeID VARCHAR(8) NOT NULL PRIMARY KEY,
+    AccountID VARCHAR(8) NULL,
+    Name NVARCHAR(100),
+    Address NVARCHAR(100),
+    Phone VARCHAR(20),
+    DateOfBirth DATE,
+    Sex NVARCHAR(5),
+    Role NVARCHAR(20),
+    Status INT,
+    FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
+);
+GO
+
+--ALTER TABLE Employee
+--ALTER COLUMN AccountID VARCHAR(8) NULL
+
+-- Create the Product table
+CREATE TABLE Product (
+    ProductID VARCHAR(8) NOT NULL PRIMARY KEY,
+    Name NVARCHAR(50),
+    Price DECIMAL(10, 2),
+    Calories FLOAT(2),
+    Stock INT,
+    Category NVARCHAR(20),
+    Status INT,
+);
+GO
+
+-- Create the Order table
+CREATE TABLE Orders (
+    OrderID VARCHAR(8) NOT NULL PRIMARY KEY,
+    CustomerID VARCHAR(8) NOT NULL,
+    EmployeeID VARCHAR(8) NOT NULL,
+    OrderDate DATETIME,
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
+);
+GO
+
+-- Create the OrderDetail table
+CREATE TABLE OrderDetail (
+    OrderID VARCHAR(8) NOT NULL,
+    ProductID VARCHAR(8) NOT NULL,
+    Quantity INT,
+    PRIMARY KEY (OrderID, ProductID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+GO
+
+SET DATEFORMAT DMY
+
+INSERT INTO Customer
+VALUES
+('KH01', N'Nguyễn Thị Ánh', '01/03/1975', N'123 Nguyễn Văn Cừ, Quận 1, TP.HCM', '0901234567', N'Nữ', 25, 1),
+('KH02', N'Lê Văn Đức', '20/05/1998', N'456 Trần Hưng Đạo, Quận 5, TP.HCM', '0909876543', N'Nam', 30, 1),
+('KH03', N'Phạm Thị Mai', '17/03/2000', N'789 Nguyễn Thị Minh Khai, Quận 3, TP.HCM', '0902223333', N'Nữ', 20, 1),
+('KH04', N'Nguyễn Văn Hưng', '29/12/1980', N'555 Lê Lợi, Quận 1, TP.HCM', '0904445555', N'Nam', 15, 1),
+('KH05', N'Trần Thị Thanh', '01/12/1975', N'888 Phạm Ngọc Thạch, Quận 3, TP.HCM', '0906667777', N'Nữ', 5, 1),
+('KH06', N'Huỳnh Thanh Tùng', '01/01/1999', N'256 Hùng Vương, Quận 10, TP.HCM', '0901234987', N'Nam', 40, 1),
+('KH07', N'Phan Thị Phương', '13/07/1950', N'777 Bến Vân Đồn, Quận 4, TP.HCM', '0904567812', N'Nữ', 10, 1),
+('KH08', N'Lê Hoàng Anh', '17/10/2001', N'111 Hoàng Văn Thụ, Quận Tân Bình, TP.HCM', '0907890123', N'Nam', 35, 1),
+('KH09', N'Nguyễn Thị Thúy', '27/09/1983', N'666 Cách Mạng Tháng Tám, Quận 3, TP.HCM', '0906543210', N'Nữ', 50, 1),
+('KH10', N'Phạm Văn Đức', '31/01/1999', N'555 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM', '0901472583', N'Nam', 5, 1),
+('KH11', N'Lê Thị Hương', '07/06/1967', N'888 Trường Chinh, Quận 12, TP.HCM', '0903692581', N'Nữ', 30, 1),
+('KH12', N'Trương Văn Tùng', '09/03/1984', N'222 Đề Thám, Quận 1, TP.HCM', '0909517538', N'Nam', 20, 1),
+('KH13', N'Võ Thị Tuyết', '15/05/1989', N'333 Lý Tự Trọng, Quận 5, TP.HCM', '0907539514', N'Nữ', 25, 1),
+('KH14', N'Nguyễn Văn Nam', '17/03/1973', N'444 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '0901593574', N'Nam', 15, 1);
+
+INSERT INTO Access (AccessID, Name, Authority) VALUES
+('QL', N'Quản Lý', 'Admin'),
+('NV', N'Nhân Viên', 'None');
+
+INSERT INTO Account (AccountID, AccessID, Username, Password) VALUES
+('TK01', 'QL', 'admin', 'admin123'),
+('TK02', 'QL', 'manager', 'manager123'),
+('TK03', 'NV', 'employee1', '123456'),
+('TK04', 'NV', 'employee2', 'qwerty'),
+('TK05', 'NV', 'employee3', 'password'),
+('TK06', 'NV', 'employee4', 'letmein'),
+('TK07', 'NV', 'employee5', 'changeme'),
+('TK08', 'NV', 'employee6', '123qwe'),
+('TK09', 'NV', 'employee7', 'abc123'),
+('TK10', 'NV', 'employee8', 'test123'),
+('TK11', 'NV', 'employee9', 'iloveyou'),
+('TK12', 'NV', 'employee10', 'welcome');
+
+INSERT INTO Employee
+VALUES
+('NV01', 'TK01', N'Huỳnh Thị Ánh Ngọc', N'12 Lý Tự Trọng, Quận 1', '0901234567', '01/01/1990', N'Nữ', N'Quản Lý', 1),
+('NV02', 'TK02', N'Nguyễn Thị Huyền Trang', N'54 Trần Hưng Đạo, Quận 5', '0902345678', '05/05/1995', N'Nữ', N'Quản Lý', 1),
+('NV03', 'TK03', N'Lê Văn Thắng', N'234 Lê Văn Sỹ, Quận 3', '0903456789', '10/08/1992', N'Nam', N'Nhân Viên', 1),
+('NV04', 'TK04', N'Phạm Thị Hoài', N'111 Lê Lợi, Quận 1', '0904567891', '21/03/1993', N'Nữ', N'Nhân Viên', 1),
+('NV05', 'TK05', N'Trần Minh Hiếu', N'77 Nguyễn Trãi, Quận 5', '0905678912', '31/12/1994', N'Nam', N'Nhân Viên', 1),
+('NV06', 'TK06', N'Hồ Thị Phương Thảo', N'123 Điện Biên Phủ, Quận 10', '0906789123', '12/06/1999', N'Nữ', N'Nhân Viên', 1),
+('NV07', 'TK07', N'Nguyễn Đình Tài', N'22 Phạm Ngọc Thạch, Quận 3', '0907891234', '16/04/1991', N'Nam', N'Nhân Viên', 1),
+('NV08', 'TK08', N'Nguyễn Thị Anh Đào', N'30 Lê Duẩn, Quận 1', '0908912345', '20/11/1990', N'Nữ', N'Nhân Viên', 1),
+('NV09', 'TK09', N'Lê Văn Lực', N'56 Nguyễn Thị Minh Khai, Quận 1', '0900123456', '09/03/1993', N'Nam', N'Nhân Viên', 1),
+('NV10', 'TK10', N'Phạm Thị Quỳnh Anh', N'89 Hai Bà Trưng, Quận 1', '0901234567', '07/08/1995', N'Nữ', N'Nhân Viên', 1),
+('NV11', 'TK11', N'Trương Thanh Hoa', N'4 Trần Hưng Đạo, Quận 5', '0902345678', '25/12/1992', N'Nữ', N'Nhân Viên', 1),
+('NV12', 'TK12', N'Lê Hoàng Lương', N'81 Nguyễn Thị Minh Khai, Quận 1', '0882651432', '03/09/1991', N'Nam', N'Nhân Viên', 1);
+GO
+
+INSERT INTO Product
+VALUES
+('SP01', N'Burger', 50000, 600, 50, N'Đồ ăn', 1),
+('SP02', N'Khoai tây chiên', 25000, 400, 100, N'Đồ ăn', 1),
+('SP03', N'Gà rán', 45000, 800, 30, N'Đồ ăn', 1),
+('SP04', N'Hotdog', 35000, 500, 70, N'Đồ ăn', 1),
+('SP05', N'Pizza', 65000, 900, 20, N'Đồ ăn', 1),
+('SP06', N'Spaghetti', 55000, 750, 40, N'Đồ ăn', 1),
+('SP07', N'Coca Cola', 12000, 200, 200, N'Đồ uống', 1),
+('SP08', N'Pepsi', 12000, 200, 200, N'Đồ uống', 1),
+('SP09', N'Nước cam', 15000, 100, 150, N'Đồ uống', 1),
+('SP10', N'Nước táo', 15000, 100, 150, N'Đồ uống', 1),
+('SP11', N'Sữa chua', 25000, 300, 80, N'Đồ uống', 1),
+('SP12', N'Sinh tố', 20000, 250, 100, N'Đồ uống', 1),
+('SP13', N'Phở bò', 45000, 700, 30, N'Đồ ăn', 1),
+('SP14', N'Gỏi cuốn', 35000, 500, 50, N'Đồ ăn', 1);
+GO
+
+INSERT INTO Orders (OrderID, CustomerID, EmployeeID, OrderDate) VALUES
+('DH01', 'KH01', 'NV05', '2023-01-01 08:15:00'),
+('DH02', 'KH02', 'NV06', '2023-01-02 12:30:00'),
+('DH03', 'KH03', 'NV03', '2023-01-03 06:50:00'),
+('DH04', 'KH04', 'NV07', '2023-01-04 06:30:00'),
+('DH05', 'KH05', 'NV04', '2023-01-05 15:40:00'),
+('DH06', 'KH06', 'NV08', '2023-01-06 07:10:00'),
+('DH07', 'KH07', 'NV11', '2023-01-07 06:40:00'),
+('DH08', 'KH08', 'NV10', '2023-01-08 17:20:00'),
+('DH09', 'KH09', 'NV12', '2023-01-09 06:30:00'),
+('DH10', 'KH10', 'NV04', '2023-01-10 15:40:00');
+GO
+
+INSERT INTO OrderDetail (OrderID, ProductID, Quantity) VALUES
+-- Order 1
+('DH01', 'SP01', 2),
+('DH01', 'SP02', 1),
+-- Order 2
+('DH02', 'SP04', 2),
+('DH02', 'SP05', 1),
+-- Order 3
+('DH03', 'SP06', 2),
+('DH03', 'SP07', 1),
+-- Order 4
+('DH04', 'SP08', 3),
+-- Order 5
+('DH05', 'SP09', 1),
+('DH05', 'SP10', 2),
+-- Order 6
+('DH06', 'SP12', 1),
+-- Order 7
+('DH07', 'SP13', 2),
+('DH07', 'SP14', 1),
+-- Order 8
+('DH08', 'SP10', 1),
+('DH08', 'SP06', 2),
+-- Order 9
+('DH09', 'SP07', 3),
+-- Order 10
+('DH10', 'SP11', 1),
+('DH10', 'SP08', 2);
+GO
