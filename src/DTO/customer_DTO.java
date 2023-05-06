@@ -1,7 +1,4 @@
 package DTO;
-import BUS.customer_BUS;
-import DAO.customer_DAO;
-
 public class customer_DTO {
     private String customerID;
     private String customerName;

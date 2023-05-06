@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af395601-231b-44c7-81d8-168fd1ca8ab8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doan.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BUS/customer_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DAO/JDBC.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DAO/customer_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DTO/customer_DTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/customerGUI.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/customerGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+    <list default="true" id="af395601-231b-44c7-81d8-168fd1ca8ab8" name="Changes" comment="CUSTOMERFILE">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/customer_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/customer_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/JDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/JDBC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/customer_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/customer_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/customer_DTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/customer_DTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/customerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/customerGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +25,13 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Dai_edit" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -84,17 +81,41 @@
       <option name="presentableId" value="Default" />
       <updated>1678806034266</updated>
     </task>
+    <task id="LOCAL-00001" summary="CUSTOMERFILE">
+      <created>1681457689910</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681457689910</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/DAO/customer_DAO.java</url>
-          <line>230</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Dai_workfi" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="CUSTOMERFILE" />
+    <option name="LAST_COMMIT_MESSAGE" value="CUSTOMERFILE" />
   </component>
 </project>
