@@ -7,12 +7,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import BUS.customer_BUS;
-import DAO.JDBC;
-import DAO.customer_DAO;
 import DTO.customer_DTO;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 public class customerGUI {
     private final customer_BUS customerBUS = new customer_BUS();
@@ -42,9 +39,11 @@ public class customerGUI {
     private JLabel customerTitle;
     private JTextField customerSearchTextField;
     private JScrollPane tableScrollPane;
-
     public customerGUI(JFrame frame){
-//        JFrame frame = new JFrame();
+        initCustomerGUI(frame);
+    }
+    private void initCustomerGUI(JFrame frame){
+//        JFrame frame = new JFrame(title);
 //        frame.add(customerPanel);
         customerPanel.setBorder(new EmptyBorder(5,10,5,10));
         customerRightPanel.setBorder(new EmptyBorder(5,10,5,10));
@@ -160,31 +159,31 @@ public class customerGUI {
                 if (!result.isBlank()){
                     ArrayList<customer_DTO> resultList;
                     switch (customerSearchComboBox.getSelectedIndex()){
-                        case 0:
+                        case 0: // CLICKED BY ID
                             resultList = customerBUS.searchCustomerByID(result.toUpperCase());
                             updateTable(customerTableModel,resultList);
                             break;
-                        case 1:
+                        case 1: // CLICKED BY NAME
                             resultList = customerBUS.searchCustomerByName(result);
                             updateTable(customerTableModel,resultList);
                             break;
-                        case 2:
+                        case 2: // CLICKED BY DATE OF BIRTH
                             resultList = customerBUS.searchCustomerByDateOfBirth(result);
                             updateTable(customerTableModel,resultList);
                             break;
-                        case 3:
+                        case 3: // CLICKED BY ADDRESS
                             resultList = customerBUS.searchCustomerByAddress(result);
                             updateTable(customerTableModel,resultList);
                             break;
-                        case 4:
+                        case 4: // CLICKED BY PHONE
                             resultList = customerBUS.searchCustomerByPhone(result);
                             updateTable(customerTableModel,resultList);
                             break;
-                        case 5:
+                        case 5: // CLICKED BY SEX
                             resultList = customerBUS.searchCustomerBySex(result);
                             updateTable(customerTableModel,resultList);
                             break;
-                        case 6:
+                        case 6: // CLICKED BY POINT
                             resultList = customerBUS.searchCustomerByPoint(result);
                             updateTable(customerTableModel,resultList);
                             break;
@@ -239,19 +238,23 @@ public class customerGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String id = customerIDTextField.getText().toUpperCase().trim();
-                if (id.isBlank())
-                    JOptionPane.showMessageDialog(null,"Xóa thất bại! Bạn chưa nhập mã khách" +
-                            "hàng","THÔNG BÁO",JOptionPane.INFORMATION_MESSAGE);
-                else {
-                    if (customerBUS.deleteCustomer(id)) {
-                        JOptionPane.showMessageDialog(null, "Xóa thành công!",
-                                "THÔNG BÁO", JOptionPane.INFORMATION_MESSAGE);
-                        updateTable(customerTableModel,customerBUS.getAllCustomers());
+                int result = JOptionPane.showConfirmDialog(null,"Bạn muốn xóa?","THÔNG BÁO",
+                        JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION){
+                    String id = customerIDTextField.getText().toUpperCase().trim();
+                    if (id.isBlank())
+                        JOptionPane.showMessageDialog(null,"Xóa thất bại! Bạn chưa nhập mã khách" +
+                                "hàng","THÔNG BÁO",JOptionPane.INFORMATION_MESSAGE);
+                    else {
+                        if (customerBUS.deleteCustomer(id)) {
+                            JOptionPane.showMessageDialog(null, "Xóa thành công!",
+                                    "THÔNG BÁO", JOptionPane.INFORMATION_MESSAGE);
+                            updateTable(customerTableModel,customerBUS.getAllCustomers());
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null,"Xóa thất bại!","THÔNG BÁO",
+                                    JOptionPane.INFORMATION_MESSAGE);
                     }
-                    else
-                        JOptionPane.showMessageDialog(null,"Xóa thất bại!","THÔNG BÁO",
-                                JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -293,7 +296,6 @@ public class customerGUI {
             }
         });
         // FRAME SETTING //
-//        frame.add(customerSearchComboBox);
 //        frame.pack();
 //        frame.setVisible(true);
 //        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -318,17 +320,7 @@ public class customerGUI {
         }
         tableModel.fireTableDataChanged();
     }
-
-
-
-
-//
 //    public static void main(String[] args) {
-//        new customerGUI();
+//        customerGUI gui = new customerGUI("quản lý khách hàng");
 //    }
-
-
-
-
-
 }

@@ -1,8 +1,5 @@
 package DAO;
-
-import DAO.JDBC;
 import DTO.customer_DTO;
-import BUS.customer_BUS;
 import java.util.ArrayList;
 import java.sql.*;
 public class customer_DAO {
@@ -11,7 +8,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try {
-                String sqlQuery = "Select * from Customer;";
+                String sqlQuery = "Select * from Customer Where Status=1;";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -33,35 +30,12 @@ public class customer_DAO {
         }
         return customers;
     }
-    public customer_DTO getCustomerByID(String customerID){
-        customer_DTO customer = new customer_DTO();
-        if (connnect.openConnection()){
-            try{
-                String sqlQuery = "Select * from Customer where CustomerID ='" + customerID + "';";
-                Statement stmt = connnect.getCon().createStatement();
-                ResultSet resultSet = stmt.executeQuery(sqlQuery);
-                resultSet.next();
-                customer.setCustomerID(customerID);
-                customer.setCustomerName(resultSet.getString("Name"));
-                customer.setCustomerDayOfBirth(resultSet.getString("DateOfBirth"));
-                customer.setCustomerAddress(resultSet.getString("Address"));
-                customer.setCustomerPhone(resultSet.getString("Phone"));
-                customer.setCustomerSex(resultSet.getString("Sex"));
-                customer.setCustomerPoint(resultSet.getInt("Point"));
-            } catch (SQLException ex){
-                System.out.printf("ex");
-            } finally {
-                connnect.closeConnection();
-            }
-        }
-        return customer;
-    }
 
     public boolean addCustomer(customer_DTO customer){
         boolean result = false;
         if (connnect.openConnection()){
             try{
-                String sqlQuery = "Insert into Customer values(?, ?, ?, ?, ?, ?, ?);";
+                String sqlQuery = "Insert into Customer values(?, ?, ?, ?, ?, ?, ?,1);";
                 PreparedStatement stmt = connnect.getCon().prepareStatement(sqlQuery);
                 stmt.setString(1,customer.getCustomerID());
                 stmt.setString(2,customer.getCustomerName());
@@ -85,7 +59,7 @@ public class customer_DAO {
         boolean result = false;
         if (connnect.openConnection()){
             try{
-                String sqlQuery = "Delete from Customer where CustomerID = ?;";
+                String sqlQuery = "Update Customer Set Status=0 Where CustomerID=?;";
                 PreparedStatement stmt = connnect.getCon().prepareStatement(sqlQuery);
                 stmt.setString(1,customerID);
                 if (stmt.executeUpdate() >= 1)
@@ -103,7 +77,7 @@ public class customer_DAO {
         boolean result = false;
         if (connnect.openConnection()){
             try{
-                String sqlQuery = "Update Customer Set Name=?, DateOfBirth=?, Address=?, Phone=?, Sex=?, Point=? Where CustomerID=?;";
+                String sqlQuery = "Update Customer Set Name=?, DateOfBirth=?, Address=?, Phone=?, Sex=?, Point=? Where Status=1 and CustomerID=?;";
                 PreparedStatement stmt = connnect.getCon().prepareStatement(sqlQuery);
                 stmt.setNString(1,customer.getCustomerName());
                 stmt.setString(2,customer.getCustomerDayOfBirth());
@@ -126,7 +100,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try{
-                String sqlQuery = "Select * from Customer where CustomerID like '%" + customerID + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and CustomerID like '%" + customerID + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -153,7 +127,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try{
-                String sqlQuery = "Select * from Customer where Name like '%" + customerName + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and Name like '%" + customerName + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -179,7 +153,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try {
-                String sqlQuery = "Select * from Customer where DateOfBirth like '%" + customerDateOfBirth + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and DateOfBirth like '%" + customerDateOfBirth + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -205,7 +179,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try {
-                String sqlQuery = "Select * from Customer where Address like '%" + customerAddress + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and Address like '%" + customerAddress + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -231,7 +205,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()) {
             try {
-                String sqlQuery = "Select * from Customer where Phone like '%" + customerPhone + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and Phone like '%" + customerPhone + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -257,7 +231,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try {
-                String sqlQuery = "Select * from Customer where Sex like '%" + customerSex + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and Sex like '%" + customerSex + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -283,7 +257,7 @@ public class customer_DAO {
         ArrayList<customer_DTO> customers = new ArrayList<>();
         if (connnect.openConnection()){
             try {
-                String sqlQuery = "Select * from Customer where Point like '%" + customerPoint + "%';";
+                String sqlQuery = "Select * from Customer where Status=1 and Point like '%" + customerPoint + "%';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 while (resultSet.next()){
@@ -309,7 +283,7 @@ public class customer_DAO {
         boolean result = false;
         if (connnect.openConnection()){
             try{
-                String sqlQuery = "Select * from Customer where CustomerID='" + customerID + "';";
+                String sqlQuery = "Select * from Customer where Status=1 and CustomerID='" + customerID + "';";
                 Statement stmt = connnect.getCon().createStatement();
                 ResultSet resultSet = stmt.executeQuery(sqlQuery);
                 result = resultSet.next();

@@ -1,15 +1,11 @@
 package BUS;
 import DAO.customer_DAO;
 import DTO.customer_DTO;
-
 import java.util.ArrayList;
 public class customer_BUS {
     private customer_DAO customerDAO = new customer_DAO();
     public ArrayList<customer_DTO> getAllCustomers(){
         return customerDAO.getAllCustomers();
-    }
-    public customer_DTO getCustomerByID(String customerID){
-        return customerDAO.getCustomerByID(customerID);
     }
     public boolean addCustomer(customer_DTO customer){
         return customerDAO.addCustomer(customer);
